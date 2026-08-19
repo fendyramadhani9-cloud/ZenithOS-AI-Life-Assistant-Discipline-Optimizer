@@ -59,10 +59,9 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                     label: const Text('Google Gemini'),
                     selected: _selectedProvider == AiProvider.gemini,
                     onSelected: (val) {
-                      if (val)
-                        setDialogState(
-                          () => _selectedProvider = AiProvider.gemini,
-                        );
+                      if (val) {
+                        setDialogState(() => _selectedProvider = AiProvider.gemini);
+                      }
                     },
                     selectedColor: AppColors.accentPrimary.withOpacity(0.2),
                     backgroundColor: AppColors.surfaceLight,
@@ -72,10 +71,9 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                     label: const Text('OpenAI GPT'),
                     selected: _selectedProvider == AiProvider.openAi,
                     onSelected: (val) {
-                      if (val)
-                        setDialogState(
-                          () => _selectedProvider = AiProvider.openAi,
-                        );
+                      if (val) {
+                        setDialogState(() => _selectedProvider = AiProvider.openAi);
+                      }
                     },
                     selectedColor: AppColors.accentSecondary.withOpacity(0.2),
                     backgroundColor: AppColors.surfaceLight,
