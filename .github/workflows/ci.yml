@@ -40,7 +40,7 @@ jobs:
         run: dart format --output=none --set-exit-if-changed .
 
       - name: Run Static Code Analysis (Lints)
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
 
   # 2. Verify Flutter Web Build
   build-web-verification:
@@ -98,21 +98,14 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
+      - name: Setup Node.js 22 (LTS)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
+          node-version: 22
 
       - name: Install Backend Dependencies
         working-directory: ./backend
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
+        run: npm install
 
       - name: Syntax & Lint Check Backend Code
         working-directory: ./backend

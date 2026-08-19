@@ -139,7 +139,7 @@
 2. **Install APK**: Transfer file `build/app/outputs/flutter-apk/app-release.apk` ke HP Android Anda lalu lakukan instalasi.
 3. **Buka Aplikasi ZenithOS**: Pada layar pertama (*Onboarding*), Anda akan diminta memasukkan API Key Anda sendiri (**Zero Backend Required** — HP Anda langsung berkomunikasi secara terenkripsi ke endpoint AI).
 
-#### 🔑 Cara Mendapatkan API Key Google Gemini (100% Gratis):
+####  Cara Mendapatkan API Key Google Gemini (100% Gratis):
 1. Buka browser dan kunjungi **[Google AI Studio](https://aistudio.google.com/)**.
 2. Login menggunakan akun Google Anda.
 3. Klik tombol **"Get API key"** di sidebar kiri atau pojok kanan atas.
@@ -162,7 +162,7 @@
 
 Proyek ini telah dilengkapi pipeline CI/CD otomatis di folder `.github/workflows/`:
 
-### 🔄 Continuous Integration (`ci.yml`)
+###  Continuous Integration (`ci.yml`)
 - **Pemicu (Trigger)**: Otomatis berjalan setiap kali ada **Pull Request (PR)** atau **Push** ke branch `main`.
 - **Tugas Otomatis**:
   1. *Code formatting check* (`dart format`).
@@ -172,7 +172,7 @@ Proyek ini telah dilengkapi pipeline CI/CD otomatis di folder `.github/workflows
   5. Pemeriksaan sintaks backend Node.js & dependencies.
 - **Tujuan**: Memastikan inovasi fitur baru atau perbaikan bug dari kontributor tidak merusak sistem yang ada sebelum di-merge.
 
-### 🚀 Continuous Delivery (`cd.yml`) dengan Approval Gate
+###  Continuous Delivery (`cd.yml`) dengan Approval Gate
 - **Pemicu (Trigger)**: Saat membuat tag rilis baru (misal `v1.0.0`) atau dijalankan manual via *Actions Dispatch*.
 - **Approval Gate (Persetujuan Wajib)**: Menggunakan GitHub Environment `production` dengan aturan *Required Reviewers*. Rilis tidak akan dipublikasikan sebelum Anda memberikan persetujuan (*Review deployments $\rightarrow$ Approve*).
 - **Hasil Rilis (Artifacts)**:

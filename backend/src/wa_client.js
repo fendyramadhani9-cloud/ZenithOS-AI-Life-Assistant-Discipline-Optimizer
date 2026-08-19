@@ -1,3 +1,8 @@
+const crypto = require('crypto');
+if (!globalThis.crypto) {
+  globalThis.crypto = crypto;
+}
+
 const {
   default: makeWASocket,
   DisconnectReason,
@@ -50,10 +55,10 @@ class WhatsAppClient {
           const shouldReconnect =
             lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
           console.log(
-            `[Zenith WA] Connection closed (${lastDisconnect?.error?.message}). Reconnecting: ${shouldReconnect}`
+            `[Zenith WA] Connection status: (${lastDisconnect?.error?.message}). Reconnecting: ${shouldReconnect}`
           );
           if (shouldReconnect) {
-            this.initialize();
+            setTimeout(() => this.initialize(), 5000);
           }
         } else if (connection === 'open') {
           this.isConnected = true;
@@ -75,7 +80,6 @@ class WhatsAppClient {
     }
 
     try {
-      // Format number to WhatsApp JID (e.g. 628123456789@s.whatsapp.net)
       const cleanNumber = targetPhone.replace(/[^0-9]/g, '');
       const jid = `${cleanNumber}@s.whatsapp.net`;
 
