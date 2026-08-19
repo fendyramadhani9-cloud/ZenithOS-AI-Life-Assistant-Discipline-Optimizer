@@ -1,0 +1,105 @@
+name: ZenithOS CD - Production Delivery & Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release Version Tag (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+      release_notes:
+        description: 'Release Notes / Changelog'
+        required: false
+        default: 'Production release of ZenithOS (Life Assistant & Discipline Optimizer).'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  # Gate Approval Environment: requires explicit reviewer approval configured in GitHub Repository Settings -> Environments -> production
+  delivery-approval-gate:
+    name: Production Deployment Approval Gate
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Acknowledge Manual Approval
+        run: |
+          echo "Deployment approval received from repository owner."
+          echo "Proceeding with production artifact assembly and release delivery."
+
+  # Build & Deliver Production Artifacts
+  build-and-deliver:
+    name: Build & Publish Release Artifacts
+    needs: delivery-approval-gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java (Temurin JDK 17)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      # Build 1: Android Release APK
+      - name: Build Android Release APK
+        run: flutter build apk --release
+
+      - name: Rename & Stage APK Artifact
+        run: |
+          mkdir -p release_artifacts
+          cp build/app/outputs/flutter-apk/app-release.apk release_artifacts/zenith-os-android-${{ github.event.inputs.release_version || github.ref_name }}.apk
+
+      # Build 2: Flutter Web Bundle
+      - name: Build Flutter Web Bundle
+        run: flutter build web --release
+
+      - name: Archive Web Build
+        run: |
+          tar -czf release_artifacts/zenith-os-web-${{ github.event.inputs.release_version || github.ref_name }}.tar.gz -C build/web .
+
+      # Upload Artifacts to GitHub Actions Run
+      - name: Upload Build Artifacts to Actions
+        uses: actions/upload-artifact@v4
+        with:
+          name: zenith-production-bundle
+          path: release_artifacts/*
+
+      # Create Official GitHub Release with Attached Assets
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.release_version || github.ref_name }}
+          name: ZenithOS Release ${{ github.event.inputs.release_version || github.ref_name }}
+          body: |
+            ### ZenithOS — Production Release (${{ github.event.inputs.release_version || github.ref_name }})
+            
+            ${{ github.event.inputs.release_notes }}
+            
+            #### 📦 Download Assets:
+            - **Android Native APK**: `zenith-os-android-${{ github.event.inputs.release_version || github.ref_name }}.apk` (Install langsung di HP Android, Zero Backend required)
+            - **Web Deployment Bundle**: `zenith-os-web-${{ github.event.inputs.release_version || github.ref_name }}.tar.gz` (Untuk Nginx / Homelab)
+            
+            #### 🛡️ Verification & Security:
+            - Built with Flutter Stable SDK.
+            - Strict Zero-Emoji UI with Cyber-Obsidian Minimalist Theme.
+            - Offline-first storage with BYOK Key Vault failover.
+          files: |
+            release_artifacts/*.apk
+            release_artifacts/*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

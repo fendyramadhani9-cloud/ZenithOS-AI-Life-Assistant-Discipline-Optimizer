@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # ZenithOS Frontend (Flutter Web on Nginx)
+  frontend:
+    container_name: zenith_frontend
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - zenith_net
+
+  # ZenithOS Automation Backend (Express + Baileys WhatsApp Bot + Cron)
+  backend:
+    container_name: zenith_backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - WHATSAPP_TARGET_PHONE=6281200000000
+    volumes:
+      # Persistent WhatsApp authentication state
+      - ./backend/auth_info:/app/auth_info
+      - ./backend/data:/app/data
+    restart: unless-stopped
+    networks:
+      - zenith_net
+
+networks:
+  zenith_net:
+    driver: bridge

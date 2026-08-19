@@ -1,0 +1,119 @@
+name: ZenithOS CI - Quality & Build Verification
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 1. Lint, Format & Static Code Analysis
+  flutter-analysis:
+    name: Flutter Lint & Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java (Temurin JDK 17)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Flutter Dependencies
+        run: flutter pub get
+
+      - name: Verify Code Formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Run Static Code Analysis (Lints)
+        run: flutter analyze
+
+  # 2. Verify Flutter Web Build
+  build-web-verification:
+    name: Verify Flutter Web Build
+    needs: flutter-analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Flutter Web (Production)
+        run: flutter build web --release
+
+  # 3. Verify Android APK Build
+  build-android-verification:
+    name: Verify Android APK Build
+    needs: flutter-analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java (Temurin JDK 17)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Android APK (Release Verification)
+        run: flutter build apk --release
+
+  # 4. Backend Automation Syntax & Dependency Check
+  backend-verification:
+    name: Verify Node.js Backend & WhatsApp Bot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Syntax & Lint Check Backend Code
+        working-directory: ./backend
+        run: node -c src/index.js src/wa_client.js
