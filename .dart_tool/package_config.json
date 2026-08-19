@@ -314,10 +314,10 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "lucide_icons",
-      "rootUri": "file:///root/.pub-cache/hosted/pub.dev/lucide_icons-0.257.0",
+      "name": "lucide_icons_flutter",
+      "rootUri": "file:///root/.pub-cache/hosted/pub.dev/lucide_icons_flutter-3.1.15",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "matcher",
