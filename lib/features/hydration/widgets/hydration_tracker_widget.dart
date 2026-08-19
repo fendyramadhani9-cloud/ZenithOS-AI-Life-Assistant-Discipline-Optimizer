@@ -60,21 +60,30 @@ class _HydrationTrackerWidgetState extends State<HydrationTrackerWidget> {
                       color: AppColors.hydrationAccent.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(LucideIcons.droplets, color: AppColors.hydrationAccent, size: 18),
+                    child: const Icon(
+                      LucideIcons.droplets,
+                      color: AppColors.hydrationAccent,
+                      size: 18,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Hydration Tracker', style: AppTypography.h3),
-                      Text('Target: $_targetGoalMl ml / day', style: AppTypography.caption),
+                      Text(
+                        'Target: $_targetGoalMl ml / day',
+                        style: AppTypography.caption,
+                      ),
                     ],
                   ),
                 ],
               ),
               Text(
                 '$_currentHydrationMl ml',
-                style: AppTypography.metricMedium.copyWith(color: AppColors.hydrationAccent),
+                style: AppTypography.metricMedium.copyWith(
+                  color: AppColors.hydrationAccent,
+                ),
               ),
             ],
           ),
@@ -84,10 +93,15 @@ class _HydrationTrackerWidgetState extends State<HydrationTrackerWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('$percentage% of daily target', style: AppTypography.caption),
+              Text(
+                '$percentage% of daily target',
+                style: AppTypography.caption,
+              ),
               Text(
                 '${(_targetGoalMl - _currentHydrationMl).clamp(0, 5000)} ml remaining',
-                style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
+                style: AppTypography.caption.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -98,7 +112,9 @@ class _HydrationTrackerWidgetState extends State<HydrationTrackerWidget> {
               value: ratio,
               minHeight: 8,
               backgroundColor: AppColors.background,
-              valueColor: const AlwaysStoppedAnimation<Color>(AppColors.hydrationAccent),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                AppColors.hydrationAccent,
+              ),
             ),
           ),
           const SizedBox(height: 14),
@@ -109,7 +125,11 @@ class _HydrationTrackerWidgetState extends State<HydrationTrackerWidget> {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () => _addWater(250),
-                  icon: const Icon(LucideIcons.plus, size: 14, color: AppColors.hydrationAccent),
+                  icon: const Icon(
+                    LucideIcons.plus,
+                    size: 14,
+                    color: AppColors.hydrationAccent,
+                  ),
                   label: const Text('+250 ml'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -121,7 +141,11 @@ class _HydrationTrackerWidgetState extends State<HydrationTrackerWidget> {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () => _addWater(500),
-                  icon: const Icon(LucideIcons.plus, size: 14, color: AppColors.hydrationAccent),
+                  icon: const Icon(
+                    LucideIcons.plus,
+                    size: 14,
+                    color: AppColors.hydrationAccent,
+                  ),
                   label: const Text('+500 ml'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 10),

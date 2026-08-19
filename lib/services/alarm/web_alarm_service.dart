@@ -44,14 +44,20 @@ class WebAlarmService implements AlarmService {
           .timeout(const Duration(seconds: 3));
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        debugPrint('[WebAlarmService] Webhook received successfully: ${response.body}');
+        debugPrint(
+          '[WebAlarmService] Webhook received successfully: ${response.body}',
+        );
         return true;
       } else {
-        debugPrint('[WebAlarmService] Local webhook offline (Status ${response.statusCode}), client simulated alarm queued.');
+        debugPrint(
+          '[WebAlarmService] Local webhook offline (Status ${response.statusCode}), client simulated alarm queued.',
+        );
         return true;
       }
     } catch (e) {
-      debugPrint('[WebAlarmService] Local backend webhook offline ($e). Active in client mode.');
+      debugPrint(
+        '[WebAlarmService] Local backend webhook offline ($e). Active in client mode.',
+      );
       return true;
     }
   }
@@ -59,10 +65,12 @@ class WebAlarmService implements AlarmService {
   @override
   Future<bool> cancelAlarm(int id) async {
     try {
-      await http.delete(
-        Uri.parse('$webhookEndpoint/$id'),
-        headers: {'Content-Type': 'application/json'},
-      ).timeout(const Duration(seconds: 2));
+      await http
+          .delete(
+            Uri.parse('$webhookEndpoint/$id'),
+            headers: {'Content-Type': 'application/json'},
+          )
+          .timeout(const Duration(seconds: 2));
       return true;
     } catch (e) {
       debugPrint('[WebAlarmService] Cancel alarm sent locally: $id');

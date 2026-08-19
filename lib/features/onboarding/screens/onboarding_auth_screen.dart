@@ -16,10 +16,14 @@ class OnboardingAuthScreen extends StatefulWidget {
 }
 
 class _OnboardingAuthScreenState extends State<OnboardingAuthScreen> {
-  final TextEditingController _nameController = TextEditingController(text: 'Architect');
+  final TextEditingController _nameController = TextEditingController(
+    text: 'Architect',
+  );
   final TextEditingController _keyController = TextEditingController();
-  final TextEditingController _labelController = TextEditingController(text: 'Primary Gemini Key');
-  
+  final TextEditingController _labelController = TextEditingController(
+    text: 'Primary Gemini Key',
+  );
+
   AiProvider _provider = AiProvider.gemini;
   bool _obscureKey = true;
   bool _isValidating = false;
@@ -113,18 +117,28 @@ class _OnboardingAuthScreenState extends State<OnboardingAuthScreen> {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [AppColors.accentPrimary, AppColors.accentSecondary],
+                          colors: [
+                            AppColors.accentPrimary,
+                            AppColors.accentSecondary,
+                          ],
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(LucideIcons.terminal, color: Color(0xFF0A0D14), size: 22),
+                      child: const Icon(
+                        LucideIcons.terminal,
+                        color: Color(0xFF0A0D14),
+                        size: 22,
+                      ),
                     ),
                     const SizedBox(width: 14),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('ZenithOS', style: AppTypography.h1),
-                        Text('Life Assistant & Discipline Optimizer', style: AppTypography.caption),
+                        Text(
+                          'Life Assistant & Discipline Optimizer',
+                          style: AppTypography.caption,
+                        ),
                       ],
                     ),
                   ],
@@ -140,7 +154,11 @@ class _OnboardingAuthScreenState extends State<OnboardingAuthScreen> {
                   controller: _nameController,
                   style: AppTypography.body,
                   decoration: const InputDecoration(
-                    prefixIcon: Icon(LucideIcons.user, size: 16, color: AppColors.accentPrimary),
+                    prefixIcon: Icon(
+                      LucideIcons.user,
+                      size: 16,
+                      color: AppColors.accentPrimary,
+                    ),
                     hintText: 'e.g. Lead Architect, Alex',
                   ),
                 ),
@@ -154,7 +172,8 @@ class _OnboardingAuthScreenState extends State<OnboardingAuthScreen> {
                     ChoiceChip(
                       label: const Text('Google Gemini (Recommended)'),
                       selected: _provider == AiProvider.gemini,
-                      onSelected: (val) => setState(() => _provider = AiProvider.gemini),
+                      onSelected: (val) =>
+                          setState(() => _provider = AiProvider.gemini),
                       selectedColor: AppColors.accentPrimary.withOpacity(0.2),
                       backgroundColor: AppColors.surfaceLight,
                     ),
@@ -162,7 +181,8 @@ class _OnboardingAuthScreenState extends State<OnboardingAuthScreen> {
                     ChoiceChip(
                       label: const Text('OpenAI'),
                       selected: _provider == AiProvider.openAi,
-                      onSelected: (val) => setState(() => _provider = AiProvider.openAi),
+                      onSelected: (val) =>
+                          setState(() => _provider = AiProvider.openAi),
                       selectedColor: AppColors.accentSecondary.withOpacity(0.2),
                       backgroundColor: AppColors.surfaceLight,
                     ),
@@ -178,11 +198,19 @@ class _OnboardingAuthScreenState extends State<OnboardingAuthScreen> {
                   obscureText: _obscureKey,
                   style: AppTypography.metricSmall,
                   decoration: InputDecoration(
-                    prefixIcon: const Icon(LucideIcons.keyRound, size: 16, color: AppColors.accentPrimary),
+                    prefixIcon: const Icon(
+                      LucideIcons.keyRound,
+                      size: 16,
+                      color: AppColors.accentPrimary,
+                    ),
                     hintText: 'Paste Gemini or OpenAI API Key...',
                     suffixIcon: IconButton(
-                      icon: Icon(_obscureKey ? LucideIcons.eyeOff : LucideIcons.eye, size: 16),
-                      onPressed: () => setState(() => _obscureKey = !_obscureKey),
+                      icon: Icon(
+                        _obscureKey ? LucideIcons.eyeOff : LucideIcons.eye,
+                        size: 16,
+                      ),
+                      onPressed: () =>
+                          setState(() => _obscureKey = !_obscureKey),
                     ),
                   ),
                 ),
@@ -195,11 +223,27 @@ class _OnboardingAuthScreenState extends State<OnboardingAuthScreen> {
                     TextButton.icon(
                       onPressed: _isValidating ? null : _validateAndPingKey,
                       icon: _isValidating
-                          ? const SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2))
-                          : const Icon(LucideIcons.activity, size: 14, color: AppColors.accentPrimary),
-                      label: Text(_isValidating ? 'Testing...' : 'Test Connection', style: AppTypography.caption.copyWith(color: AppColors.accentPrimary)),
+                          ? const SizedBox(
+                              width: 12,
+                              height: 12,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Icon(
+                              LucideIcons.activity,
+                              size: 14,
+                              color: AppColors.accentPrimary,
+                            ),
+                      label: Text(
+                        _isValidating ? 'Testing...' : 'Test Connection',
+                        style: AppTypography.caption.copyWith(
+                          color: AppColors.accentPrimary,
+                        ),
+                      ),
                     ),
-                    Text('Encrypted via SecureStorage', style: AppTypography.caption.copyWith(fontSize: 10)),
+                    Text(
+                      'Encrypted via SecureStorage',
+                      style: AppTypography.caption.copyWith(fontSize: 10),
+                    ),
                   ],
                 ),
 
@@ -208,25 +252,39 @@ class _OnboardingAuthScreenState extends State<OnboardingAuthScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: (_testSuccess == true ? AppColors.nutritionAccent : AppColors.warningCutoff).withOpacity(0.12),
+                      color:
+                          (_testSuccess == true
+                                  ? AppColors.nutritionAccent
+                                  : AppColors.warningCutoff)
+                              .withOpacity(0.12),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: (_testSuccess == true ? AppColors.nutritionAccent : AppColors.warningCutoff).withOpacity(0.4),
+                        color:
+                            (_testSuccess == true
+                                    ? AppColors.nutritionAccent
+                                    : AppColors.warningCutoff)
+                                .withOpacity(0.4),
                       ),
                     ),
                     child: Row(
                       children: [
                         Icon(
-                          _testSuccess == true ? LucideIcons.shieldCheck : LucideIcons.alertCircle,
+                          _testSuccess == true
+                              ? LucideIcons.shieldCheck
+                              : LucideIcons.alertCircle,
                           size: 16,
-                          color: _testSuccess == true ? AppColors.nutritionAccent : AppColors.warningCutoff,
+                          color: _testSuccess == true
+                              ? AppColors.nutritionAccent
+                              : AppColors.warningCutoff,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             _statusMessage!,
                             style: AppTypography.caption.copyWith(
-                              color: _testSuccess == true ? AppColors.nutritionAccent : AppColors.warningCutoff,
+                              color: _testSuccess == true
+                                  ? AppColors.nutritionAccent
+                                  : AppColors.warningCutoff,
                             ),
                           ),
                         ),

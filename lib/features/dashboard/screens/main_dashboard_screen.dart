@@ -62,10 +62,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Column 1 (Primary): Interactive AI Scheduler & Timeline
-                      const Expanded(
-                        flex: 4,
-                        child: AiSchedulerWidget(),
-                      ),
+                      const Expanded(flex: 4, child: AiSchedulerWidget()),
                       const SizedBox(width: 16),
 
                       // Column 2 (Center): Daily Log (Dual-Layer) + Hydration Tracker
@@ -111,9 +108,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       decoration: const BoxDecoration(
         color: AppColors.surface,
-        border: Border(
-          bottom: BorderSide(color: AppColors.border, width: 1),
-        ),
+        border: Border(bottom: BorderSide(color: AppColors.border, width: 1)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,9 +122,17 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                 decoration: BoxDecoration(
                   color: AppColors.accentPrimary.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: AppColors.accentPrimary.withOpacity(0.3)),
+                  border: Border.all(
+                    color: AppColors.accentPrimary.withOpacity(0.3),
+                  ),
                 ),
-                child: Text('DISCIPLINE MODE ACTIVE', style: AppTypography.caption.copyWith(color: AppColors.accentPrimary, fontSize: 10)),
+                child: Text(
+                  'DISCIPLINE MODE ACTIVE',
+                  style: AppTypography.caption.copyWith(
+                    color: AppColors.accentPrimary,
+                    fontSize: 10,
+                  ),
+                ),
               ),
             ],
           ),
@@ -137,12 +140,20 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
             children: [
               OutlinedButton.icon(
                 onPressed: () => WeeklyRetrospectiveModal.show(context),
-                icon: const Icon(LucideIcons.calendarCheck, size: 14, color: AppColors.accentSecondary),
+                icon: const Icon(
+                  LucideIcons.calendarCheck,
+                  size: 14,
+                  color: AppColors.accentSecondary,
+                ),
                 label: const Text('Weekly Wrap-Up'),
               ),
               const SizedBox(width: 10),
               IconButton(
-                icon: const Icon(LucideIcons.keyRound, size: 18, color: AppColors.textSecondary),
+                icon: const Icon(
+                  LucideIcons.keyRound,
+                  size: 18,
+                  color: AppColors.textSecondary,
+                ),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const KeyVaultScreen()),
@@ -170,7 +181,11 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
         children: [
           Row(
             children: [
-              const Icon(LucideIcons.shieldCheck, color: AppColors.accentPrimary, size: 18),
+              const Icon(
+                LucideIcons.shieldCheck,
+                color: AppColors.accentPrimary,
+                size: 18,
+              ),
               const SizedBox(width: 8),
               Text('Quick System Action', style: AppTypography.h3),
             ],
@@ -185,7 +200,10 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: AppColors.surface,
-                    content: Text('Instant snapshot created: $filename', style: AppTypography.body),
+                    content: Text(
+                      'Instant snapshot created: $filename',
+                      style: AppTypography.body,
+                    ),
                   ),
                 );
               },
@@ -214,11 +232,18 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [AppColors.accentPrimary, AppColors.accentSecondary],
+                        colors: [
+                          AppColors.accentPrimary,
+                          AppColors.accentSecondary,
+                        ],
                       ),
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    child: const Icon(LucideIcons.terminal, color: Color(0xFF0A0D14), size: 16),
+                    child: const Icon(
+                      LucideIcons.terminal,
+                      color: Color(0xFF0A0D14),
+                      size: 16,
+                    ),
                   ),
                   const SizedBox(width: 8),
                   Text('ZenithOS', style: AppTypography.h2),
@@ -226,11 +251,19 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
               ),
               actions: [
                 IconButton(
-                  icon: const Icon(LucideIcons.calendarCheck, size: 18, color: AppColors.accentSecondary),
+                  icon: const Icon(
+                    LucideIcons.calendarCheck,
+                    size: 18,
+                    color: AppColors.accentSecondary,
+                  ),
                   onPressed: () => WeeklyRetrospectiveModal.show(context),
                 ),
                 IconButton(
-                  icon: const Icon(LucideIcons.keyRound, size: 18, color: AppColors.textSecondary),
+                  icon: const Icon(
+                    LucideIcons.keyRound,
+                    size: 18,
+                    color: AppColors.textSecondary,
+                  ),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const KeyVaultScreen()),
@@ -241,9 +274,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
             ),
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 90),
-              sliver: SliverToBoxAdapter(
-                child: _buildMobileTabContent(),
-              ),
+              sliver: SliverToBoxAdapter(child: _buildMobileTabContent()),
             ),
           ],
         ),
@@ -255,7 +286,8 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
           bottom: 0,
           child: MobileBottomNav(
             selectedIndex: _selectedIndex,
-            onDestinationSelected: (index) => setState(() => _selectedIndex = index),
+            onDestinationSelected: (index) =>
+                setState(() => _selectedIndex = index),
           ),
         ),
       ],

@@ -63,10 +63,14 @@ class ApiKeyEntry {
 
   factory ApiKeyEntry.fromMap(Map<String, dynamic> map) {
     return ApiKeyEntry(
-      id: map['id']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      id:
+          map['id']?.toString() ??
+          DateTime.now().millisecondsSinceEpoch.toString(),
       label: map['label'] ?? 'API Key',
       key: map['key'] ?? '',
-      provider: map['provider'] == 'openAi' ? AiProvider.openAi : AiProvider.gemini,
+      provider: map['provider'] == 'openAi'
+          ? AiProvider.openAi
+          : AiProvider.gemini,
       isActive: map['isActive'] ?? false,
       requestCount: map['requestCount'] ?? 0,
       lastError: map['lastError'],

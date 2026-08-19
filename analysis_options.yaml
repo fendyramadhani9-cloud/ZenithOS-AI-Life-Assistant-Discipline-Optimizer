@@ -1,0 +1,17 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: false
+    strict-inference: false
+    strict-raw-types: false
+  errors:
+    deprecated_member_use: ignore
+    deprecated_member_use_from_same_package: ignore
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    - avoid_print: false
+    - prefer_const_constructors: false
+    - prefer_const_literals_to_create_immutables: false

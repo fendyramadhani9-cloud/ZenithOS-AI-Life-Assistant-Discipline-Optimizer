@@ -16,7 +16,7 @@ class KeyVaultController extends ChangeNotifier {
   static KeyVaultController get instance => _instance!;
 
   KeyVaultController._({FlutterSecureStorage? secureStorage})
-      : _secureStorage = secureStorage ?? const FlutterSecureStorage();
+    : _secureStorage = secureStorage ?? const FlutterSecureStorage();
 
   static Future<KeyVaultController> init() async {
     if (_instance != null) return _instance!;
@@ -95,7 +95,9 @@ class KeyVaultController extends ChangeNotifier {
   }
 
   Future<void> setActiveKey(String keyId) async {
-    _keyPool = _keyPool.map((k) => k.copyWith(isActive: k.id == keyId)).toList();
+    _keyPool = _keyPool
+        .map((k) => k.copyWith(isActive: k.id == keyId))
+        .toList();
     await _persistKeys();
   }
 
@@ -109,8 +111,13 @@ class KeyVaultController extends ChangeNotifier {
 
   /// Automatic Key Failover Mechanism
   /// When a key encounters 429 / Quota / 5xx error, mark error and rotate to the next available healthy key
-  Future<ApiKeyEntry?> rotateToNextKey(String failedKeyId, String reason) async {
-    debugPrint('[KeyVaultController] Failover triggered for key $failedKeyId. Reason: $reason');
+  Future<ApiKeyEntry?> rotateToNextKey(
+    String failedKeyId,
+    String reason,
+  ) async {
+    debugPrint(
+      '[KeyVaultController] Failover triggered for key $failedKeyId. Reason: $reason',
+    );
     final index = _keyPool.indexWhere((k) => k.id == failedKeyId);
     if (index != -1) {
       _keyPool[index] = _keyPool[index].copyWith(
@@ -124,7 +131,9 @@ class KeyVaultController extends ChangeNotifier {
     if (candidates.isNotEmpty) {
       final nextKey = candidates.first;
       await setActiveKey(nextKey.id);
-      debugPrint('[KeyVaultController] Switched to failover key: ${nextKey.label} (${nextKey.provider.name})');
+      debugPrint(
+        '[KeyVaultController] Switched to failover key: ${nextKey.label} (${nextKey.provider.name})',
+      );
       return nextKey;
     }
 

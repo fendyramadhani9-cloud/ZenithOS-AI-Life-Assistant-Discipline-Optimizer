@@ -43,22 +43,28 @@ class SchedulerAiService {
 
         if (permissionsGranted.isSuccess && permissionsGranted.data == true) {
           final calendarsResult = await _deviceCalendar.retrieveCalendars();
-          if (calendarsResult.isSuccess && calendarsResult.data != null && calendarsResult.data!.isNotEmpty) {
+          if (calendarsResult.isSuccess &&
+              calendarsResult.data != null &&
+              calendarsResult.data!.isNotEmpty) {
             final defaultCal = calendarsResult.data!.first;
             final now = DateTime.now();
 
             for (final item in items) {
               final startParts = item.startTime.split(':');
               final endParts = item.endTime.split(':');
-              
+
               if (startParts.length == 2 && endParts.length == 2) {
                 final start = TZDateTime.local(
-                  now.year, now.month, now.day,
+                  now.year,
+                  now.month,
+                  now.day,
                   int.tryParse(startParts[0]) ?? 8,
                   int.tryParse(startParts[1]) ?? 0,
                 );
                 final end = TZDateTime.local(
-                  now.year, now.month, now.day,
+                  now.year,
+                  now.month,
+                  now.day,
                   int.tryParse(endParts[0]) ?? 9,
                   int.tryParse(endParts[1]) ?? 0,
                 );
@@ -76,7 +82,9 @@ class SchedulerAiService {
           }
         }
       } catch (e) {
-        debugPrint('[SchedulerAiService] Calendar sync bypassed on this platform: $e');
+        debugPrint(
+          '[SchedulerAiService] Calendar sync bypassed on this platform: $e',
+        );
       }
 
       return true;

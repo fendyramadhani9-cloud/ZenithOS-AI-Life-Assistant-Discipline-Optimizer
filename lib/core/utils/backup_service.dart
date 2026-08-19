@@ -29,7 +29,7 @@ class BackupService {
       if (result != null && result.files.isNotEmpty) {
         final file = result.files.first;
         Uint8List? bytes = file.bytes;
-        
+
         if (bytes != null) {
           final jsonString = utf8.decode(bytes);
           final map = jsonDecode(jsonString) as Map<String, dynamic>;

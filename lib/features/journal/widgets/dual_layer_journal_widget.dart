@@ -37,9 +37,10 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
 
   void _loadTodayJournal() {
     final now = DateTime.now();
-    final todayKey = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+    final todayKey =
+        "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     final entries = StorageService.instance.getAllJournalEntries();
-    
+
     final match = entries.cast<Map<String, dynamic>?>().firstWhere(
       (e) => e != null && e['id'] == todayKey,
       orElse: () => null,
@@ -56,9 +57,21 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
       // Default initial daily bullets
       setState(() {
         _todos = [
-          TodoItem(id: '1', title: 'Review Kubernetes Ingress & Terraform state', isCompleted: true),
-          TodoItem(id: '2', title: 'Complete 15-min Zone 2 Cardio at Gym', isCompleted: false),
-          TodoItem(id: '3', title: 'Verify Gemini API Key Failover in ZenithOS', isCompleted: false),
+          TodoItem(
+            id: '1',
+            title: 'Review Kubernetes Ingress & Terraform state',
+            isCompleted: true,
+          ),
+          TodoItem(
+            id: '2',
+            title: 'Complete 15-min Zone 2 Cardio at Gym',
+            isCompleted: false,
+          ),
+          TodoItem(
+            id: '3',
+            title: 'Verify Gemini API Key Failover in ZenithOS',
+            isCompleted: false,
+          ),
         ];
       });
       _saveJournal();
@@ -67,7 +80,8 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
 
   void _saveJournal() {
     final now = DateTime.now();
-    final todayKey = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+    final todayKey =
+        "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     final entry = JournalEntry(
       id: todayKey,
       date: now,
@@ -90,11 +104,13 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
     if (text.isEmpty) return;
 
     setState(() {
-      _todos.add(TodoItem(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        title: text,
-        isCompleted: false,
-      ));
+      _todos.add(
+        TodoItem(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          title: text,
+          isCompleted: false,
+        ),
+      );
       _todoInputController.clear();
     });
     _saveJournal();
@@ -143,14 +159,21 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
                       color: AppColors.accentSecondary.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(LucideIcons.fileText, color: AppColors.accentSecondary, size: 18),
+                    child: const Icon(
+                      LucideIcons.fileText,
+                      color: AppColors.accentSecondary,
+                      size: 18,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Daily Log (Dual-Layer)', style: AppTypography.h3),
-                      Text('Time Capsule & Unfiltered Record', style: AppTypography.caption),
+                      Text(
+                        'Time Capsule & Unfiltered Record',
+                        style: AppTypography.caption,
+                      ),
                     ],
                   ),
                 ],
@@ -166,28 +189,39 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
                 },
                 borderRadius: BorderRadius.circular(8),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: _isPartnerShared
                         ? AppColors.accentPrimary.withOpacity(0.15)
                         : AppColors.surfaceLight,
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: _isPartnerShared ? AppColors.accentPrimary : AppColors.border,
+                      color: _isPartnerShared
+                          ? AppColors.accentPrimary
+                          : AppColors.border,
                     ),
                   ),
                   child: Row(
                     children: [
                       Icon(
-                        _isPartnerShared ? LucideIcons.share2 : LucideIcons.lock,
+                        _isPartnerShared
+                            ? LucideIcons.share2
+                            : LucideIcons.lock,
                         size: 13,
-                        color: _isPartnerShared ? AppColors.accentPrimary : AppColors.textSecondary,
+                        color: _isPartnerShared
+                            ? AppColors.accentPrimary
+                            : AppColors.textSecondary,
                       ),
                       const SizedBox(width: 6),
                       Text(
                         _isPartnerShared ? 'Partner Shared' : 'Private Only',
                         style: AppTypography.caption.copyWith(
-                          color: _isPartnerShared ? AppColors.accentPrimary : AppColors.textSecondary,
+                          color: _isPartnerShared
+                              ? AppColors.accentPrimary
+                              : AppColors.textSecondary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -203,8 +237,14 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('LAYER 1: QUICK BULLETS', style: AppTypography.caption.copyWith(letterSpacing: 0.8)),
-              Text('$completedCount/${_todos.length} Done', style: AppTypography.timeStamp),
+              Text(
+                'LAYER 1: QUICK BULLETS',
+                style: AppTypography.caption.copyWith(letterSpacing: 0.8),
+              ),
+              Text(
+                '$completedCount/${_todos.length} Done',
+                style: AppTypography.timeStamp,
+              ),
             ],
           ),
           const SizedBox(height: 8),
@@ -219,7 +259,10 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
                   decoration: const InputDecoration(
                     hintText: 'Add tactical bullet point...',
                     isDense: true,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
                   ),
                   onSubmitted: (_) => _addTodo(),
                 ),
@@ -227,7 +270,11 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
               const SizedBox(width: 6),
               IconButton(
                 onPressed: _addTodo,
-                icon: const Icon(LucideIcons.plusCircle, color: AppColors.accentPrimary, size: 20),
+                icon: const Icon(
+                  LucideIcons.plusCircle,
+                  color: AppColors.accentPrimary,
+                  size: 20,
+                ),
                 splashRadius: 20,
               ),
             ],
@@ -243,7 +290,10 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
             itemBuilder: (context, index) {
               final todo = _todos[index];
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceLight,
                   borderRadius: BorderRadius.circular(8),
@@ -254,8 +304,12 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
                     InkWell(
                       onTap: () => _toggleTodo(todo),
                       child: Icon(
-                        todo.isCompleted ? LucideIcons.checkSquare : LucideIcons.square,
-                        color: todo.isCompleted ? AppColors.nutritionAccent : AppColors.textMuted,
+                        todo.isCompleted
+                            ? LucideIcons.checkSquare
+                            : LucideIcons.square,
+                        color: todo.isCompleted
+                            ? AppColors.nutritionAccent
+                            : AppColors.textMuted,
                         size: 16,
                       ),
                     ),
@@ -265,13 +319,21 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
                         todo.title,
                         style: AppTypography.body.copyWith(
                           fontSize: 12.5,
-                          decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
-                          color: todo.isCompleted ? AppColors.textMuted : AppColors.textPrimary,
+                          decoration: todo.isCompleted
+                              ? TextDecoration.lineThrough
+                              : null,
+                          color: todo.isCompleted
+                              ? AppColors.textMuted
+                              : AppColors.textPrimary,
                         ),
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(LucideIcons.trash2, size: 14, color: AppColors.textMuted),
+                      icon: const Icon(
+                        LucideIcons.trash2,
+                        size: 14,
+                        color: AppColors.textMuted,
+                      ),
                       onPressed: () => _deleteTodo(todo.id),
                       splashRadius: 14,
                     ),
@@ -288,8 +350,15 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('LAYER 2: THE UNFILTERED STORY', style: AppTypography.caption.copyWith(letterSpacing: 0.8)),
-              const Icon(LucideIcons.shieldCheck, size: 13, color: AppColors.textMuted),
+              Text(
+                'LAYER 2: THE UNFILTERED STORY',
+                style: AppTypography.caption.copyWith(letterSpacing: 0.8),
+              ),
+              const Icon(
+                LucideIcons.shieldCheck,
+                size: 13,
+                color: AppColors.textMuted,
+              ),
             ],
           ),
           const SizedBox(height: 8),
@@ -299,7 +368,8 @@ class _DualLayerJournalWidgetState extends State<DualLayerJournalWidget> {
             maxLines: 5,
             style: AppTypography.body.copyWith(height: 1.5),
             decoration: const InputDecoration(
-              hintText: 'Raw thoughts, architecture bottlenecks, wins, or emotional clarity for future retrospectives...',
+              hintText:
+                  'Raw thoughts, architecture bottlenecks, wins, or emotional clarity for future retrospectives...',
               alignLabelWithHint: true,
             ),
           ),

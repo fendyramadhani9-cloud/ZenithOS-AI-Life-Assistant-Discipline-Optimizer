@@ -7,15 +7,12 @@ class OpenAiService implements AiService {
   final String apiKey;
   final String model;
 
-  OpenAiService({
-    required this.apiKey,
-    this.model = 'gpt-4o-mini',
-  });
+  OpenAiService({required this.apiKey, this.model = 'gpt-4o-mini'});
 
   Map<String, String> get _headers => {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${apiKey.trim()}',
-      };
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ${apiKey.trim()}',
+  };
 
   @override
   Future<bool> ping(String testKey) async {
@@ -29,7 +26,7 @@ class OpenAiService implements AiService {
         body: jsonEncode({
           'model': model,
           'messages': [
-            {'role': 'user', 'content': 'Ping. Reply PONG.'}
+            {'role': 'user', 'content': 'Ping. Reply PONG.'},
           ],
           'max_tokens': 5,
         }),
@@ -42,7 +39,10 @@ class OpenAiService implements AiService {
   }
 
   @override
-  Future<Map<String, dynamic>> analyzeFoodVision(Uint8List imageBytes, {String mimeType = 'image/jpeg'}) async {
+  Future<Map<String, dynamic>> analyzeFoodVision(
+    Uint8List imageBytes, {
+    String mimeType = 'image/jpeg',
+  }) async {
     final base64Image = base64Encode(imageBytes);
     final response = await http.post(
       Uri.parse('https://api.openai.com/v1/chat/completions'),
@@ -53,18 +53,22 @@ class OpenAiService implements AiService {
         'messages': [
           {
             'role': 'system',
-            'content': 'You are a sports nutritionist. Return JSON only with fields: foodName, calories (int), proteinGrams (num), carbsGrams (num), fatGrams (num), healthScore (num), insights (str), items (array of str).'
+            'content':
+                'You are a sports nutritionist. Return JSON only with fields: foodName, calories (int), proteinGrams (num), carbsGrams (num), fatGrams (num), healthScore (num), insights (str), items (array of str).',
           },
           {
             'role': 'user',
             'content': [
-              {'type': 'text', 'text': 'Analyze this meal for 70kg -> 64kg cut.'},
+              {
+                'type': 'text',
+                'text': 'Analyze this meal for 70kg -> 64kg cut.',
+              },
               {
                 'type': 'image_url',
-                'image_url': {'url': 'data:$mimeType;base64,$base64Image'}
-              }
-            ]
-          }
+                'image_url': {'url': 'data:$mimeType;base64,$base64Image'},
+              },
+            ],
+          },
         ],
       }),
     );
@@ -88,9 +92,10 @@ class OpenAiService implements AiService {
         'messages': [
           {
             'role': 'system',
-            'content': 'You are ZenithOS Schedule Architect. Return a JSON array of objects with startTime, endTime, title, category, priority, description. Include mandatory 22:30 Soft Cutoff and 23:00 Hard Sleep.'
+            'content':
+                'You are ZenithOS Schedule Architect. Return a JSON array of objects with startTime, endTime, title, category, priority, description. Include mandatory 22:30 Soft Cutoff and 23:00 Hard Sleep.',
           },
-          {'role': 'user', 'content': prompt}
+          {'role': 'user', 'content': prompt},
         ],
       }),
     );
@@ -120,12 +125,14 @@ class OpenAiService implements AiService {
         'messages': [
           {
             'role': 'system',
-            'content': 'You are ZenithOS Executive Performance Coach. Provide a 3-paragraph weekly discipline briefing with [WIN], [GAP], [ACTION]. No keyboard emojis.'
+            'content':
+                'You are ZenithOS Executive Performance Coach. Provide a 3-paragraph weekly discipline briefing with [WIN], [GAP], [ACTION]. No keyboard emojis.',
           },
           {
             'role': 'user',
-            'content': '7-day logs: Journal count ${journalEntries.length}, Meals count ${mealEntries.length}, Hydration ${totalWaterLiters}L.'
-          }
+            'content':
+                '7-day logs: Journal count ${journalEntries.length}, Meals count ${mealEntries.length}, Hydration ${totalWaterLiters}L.',
+          },
         ],
       }),
     );

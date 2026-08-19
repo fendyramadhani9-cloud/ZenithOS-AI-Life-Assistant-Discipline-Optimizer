@@ -16,7 +16,8 @@ class WeeklyRetrospectiveModal extends StatefulWidget {
   }
 
   @override
-  State<WeeklyRetrospectiveModal> createState() => _WeeklyRetrospectiveModalState();
+  State<WeeklyRetrospectiveModal> createState() =>
+      _WeeklyRetrospectiveModalState();
 }
 
 class _WeeklyRetrospectiveModalState extends State<WeeklyRetrospectiveModal> {
@@ -39,7 +40,8 @@ class _WeeklyRetrospectiveModalState extends State<WeeklyRetrospectiveModal> {
     try {
       final journalEntries = StorageService.instance.getAllJournalEntries();
       final mealEntries = StorageService.instance.getAllMealEntries();
-      final waterLiters = (StorageService.instance.getTodayHydration() * 7 / 1000).toInt();
+      final waterLiters =
+          (StorageService.instance.getTodayHydration() * 7 / 1000).toInt();
 
       final result = await AiFactory.executeWithFailover(
         (service) => service.generateWeeklyRetrospective(
@@ -88,20 +90,34 @@ class _WeeklyRetrospectiveModalState extends State<WeeklyRetrospectiveModal> {
                         color: AppColors.accentSecondary.withOpacity(0.12),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(LucideIcons.calendarCheck, color: AppColors.accentSecondary, size: 20),
+                      child: const Icon(
+                        LucideIcons.calendarCheck,
+                        color: AppColors.accentSecondary,
+                        size: 20,
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Weekly Retrospective Briefing', style: AppTypography.h2),
-                        Text('Sunday Discipline & Performance Wrap-Up', style: AppTypography.caption),
+                        Text(
+                          'Weekly Retrospective Briefing',
+                          style: AppTypography.h2,
+                        ),
+                        Text(
+                          'Sunday Discipline & Performance Wrap-Up',
+                          style: AppTypography.caption,
+                        ),
                       ],
                     ),
                   ],
                 ),
                 IconButton(
-                  icon: const Icon(LucideIcons.x, size: 18, color: AppColors.textMuted),
+                  icon: const Icon(
+                    LucideIcons.x,
+                    size: 18,
+                    color: AppColors.textMuted,
+                  ),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
@@ -117,45 +133,58 @@ class _WeeklyRetrospectiveModalState extends State<WeeklyRetrospectiveModal> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const CircularProgressIndicator(color: AppColors.accentSecondary),
+                          const CircularProgressIndicator(
+                            color: AppColors.accentSecondary,
+                          ),
                           const SizedBox(height: 16),
-                          Text('Aggregating 7-day metrics & generating executive briefing...', style: AppTypography.bodySecondary),
+                          Text(
+                            'Aggregating 7-day metrics & generating executive briefing...',
+                            style: AppTypography.bodySecondary,
+                          ),
                         ],
                       ),
                     )
                   : _errorMessage != null
-                      ? Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(LucideIcons.alertTriangle, color: AppColors.warningCutoff, size: 36),
-                              const SizedBox(height: 10),
-                              Text('Generation Failed', style: AppTypography.h3),
-                              const SizedBox(height: 6),
-                              Text(_errorMessage!, style: AppTypography.caption, textAlign: TextAlign.center),
-                              const SizedBox(height: 16),
-                              ElevatedButton.icon(
-                                onPressed: _generateReport,
-                                icon: const Icon(LucideIcons.rotateCcw, size: 14),
-                                label: const Text('Retry'),
-                              ),
-                            ],
+                  ? Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            LucideIcons.alertTriangle,
+                            color: AppColors.warningCutoff,
+                            size: 36,
                           ),
-                        )
-                      : SingleChildScrollView(
-                          child: Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: AppColors.surfaceLight,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: AppColors.border),
-                            ),
-                            child: SelectableText(
-                              _briefingText,
-                              style: AppTypography.body.copyWith(height: 1.6),
-                            ),
+                          const SizedBox(height: 10),
+                          Text('Generation Failed', style: AppTypography.h3),
+                          const SizedBox(height: 6),
+                          Text(
+                            _errorMessage!,
+                            style: AppTypography.caption,
+                            textAlign: TextAlign.center,
                           ),
+                          const SizedBox(height: 16),
+                          ElevatedButton.icon(
+                            onPressed: _generateReport,
+                            icon: const Icon(LucideIcons.rotateCcw, size: 14),
+                            label: const Text('Retry'),
+                          ),
+                        ],
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppColors.surfaceLight,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.border),
                         ),
+                        child: SelectableText(
+                          _briefingText,
+                          style: AppTypography.body.copyWith(height: 1.6),
+                        ),
+                      ),
+                    ),
             ),
 
             const SizedBox(height: 16),

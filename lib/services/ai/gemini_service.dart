@@ -7,10 +7,7 @@ class GeminiService implements AiService {
   final String apiKey;
   final String modelName;
 
-  GeminiService({
-    required this.apiKey,
-    this.modelName = 'gemini-1.5-flash',
-  });
+  GeminiService({required this.apiKey, this.modelName = 'gemini-1.5-flash'});
 
   GenerativeModel _getModel() {
     return GenerativeModel(
@@ -24,7 +21,9 @@ class GeminiService implements AiService {
   Future<bool> ping(String testKey) async {
     try {
       final model = GenerativeModel(model: modelName, apiKey: testKey.trim());
-      final res = await model.generateContent([Content.text('Ping. Respond with "PONG" only.')]);
+      final res = await model.generateContent([
+        Content.text('Ping. Respond with "PONG" only.'),
+      ]);
       return res.text != null && res.text!.isNotEmpty;
     } catch (e) {
       debugPrint('[GeminiService] Ping error: $e');
@@ -33,7 +32,10 @@ class GeminiService implements AiService {
   }
 
   @override
-  Future<Map<String, dynamic>> analyzeFoodVision(Uint8List imageBytes, {String mimeType = 'image/jpeg'}) async {
+  Future<Map<String, dynamic>> analyzeFoodVision(
+    Uint8List imageBytes, {
+    String mimeType = 'image/jpeg',
+  }) async {
     final model = _getModel();
     const prompt = '''
 You are the ZenithOS Nutrition Architect.
@@ -52,7 +54,7 @@ Respond ONLY with a valid JSON object (no markdown backticks, no comments):
 ''';
 
     final response = await model.generateContent([
-      Content.multi([TextPart(prompt), DataPart(mimeType, imageBytes)])
+      Content.multi([TextPart(prompt), DataPart(mimeType, imageBytes)]),
     ]);
 
     final raw = response.text;
@@ -67,7 +69,8 @@ Respond ONLY with a valid JSON object (no markdown backticks, no comments):
   @override
   Future<List<Map<String, dynamic>>> generateSchedule(String userPrompt) async {
     final model = _getModel();
-    final prompt = '''
+    final prompt =
+        '''
 You are the ZenithOS Discipline Schedule Architect.
 User Prompt: "$userPrompt"
 Rules:
@@ -128,7 +131,8 @@ Respond ONLY with a valid JSON array of objects (no markdown, no backticks):
     required int totalWaterLiters,
   }) async {
     final model = _getModel();
-    final prompt = '''
+    final prompt =
+        '''
 You are the ZenithOS Executive Performance Coach.
 Analyze the user's 7-day data:
 - Journal Entries: ${journalEntries.length}

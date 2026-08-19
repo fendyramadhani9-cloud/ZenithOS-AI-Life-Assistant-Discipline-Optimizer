@@ -38,7 +38,9 @@ class MobileAlarmService implements AlarmService {
       );
 
       final success = await Alarm.set(alarmSettings: alarmSettings);
-      debugPrint('[MobileAlarmService] Alarm $id scheduled for $dateTime (Success: $success)');
+      debugPrint(
+        '[MobileAlarmService] Alarm $id scheduled for $dateTime (Success: $success)',
+      );
       return success;
     } catch (e) {
       debugPrint('[MobileAlarmService] Failed to set native alarm ($e)');

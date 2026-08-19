@@ -27,9 +27,7 @@ class DesktopSidebar extends StatelessWidget {
       width: 260,
       decoration: const BoxDecoration(
         color: AppColors.surface,
-        border: Border(
-          right: BorderSide(color: AppColors.border, width: 1),
-        ),
+        border: Border(right: BorderSide(color: AppColors.border, width: 1)),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child: Column(
@@ -42,18 +40,31 @@ class DesktopSidebar extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [AppColors.accentPrimary, AppColors.accentSecondary],
+                    colors: [
+                      AppColors.accentPrimary,
+                      AppColors.accentSecondary,
+                    ],
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(LucideIcons.terminal, color: Color(0xFF0A0D14), size: 18),
+                child: const Icon(
+                  LucideIcons.terminal,
+                  color: Color(0xFF0A0D14),
+                  size: 18,
+                ),
               ),
               const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('ZenithOS', style: AppTypography.h2),
-                  Text('DISCIPLINE VAULT', style: AppTypography.caption.copyWith(letterSpacing: 1.0, fontSize: 9)),
+                  Text(
+                    'DISCIPLINE VAULT',
+                    style: AppTypography.caption.copyWith(
+                      letterSpacing: 1.0,
+                      fontSize: 9,
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -73,10 +84,19 @@ class DesktopSidebar extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(LucideIcons.user, size: 14, color: AppColors.accentPrimary),
+                    const Icon(
+                      LucideIcons.user,
+                      size: 14,
+                      color: AppColors.accentPrimary,
+                    ),
                     const SizedBox(width: 6),
                     Expanded(
-                      child: Text(userName, style: AppTypography.body.copyWith(fontWeight: FontWeight.w600)),
+                      child: Text(
+                        userName,
+                        style: AppTypography.body.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -87,7 +107,9 @@ class DesktopSidebar extends StatelessWidget {
                       width: 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: activeKey != null ? AppColors.nutritionAccent : AppColors.warningCutoff,
+                        color: activeKey != null
+                            ? AppColors.nutritionAccent
+                            : AppColors.warningCutoff,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -123,16 +145,38 @@ class DesktopSidebar extends StatelessWidget {
                 const SizedBox(height: 12),
                 ListTile(
                   dense: true,
-                  leading: const Icon(LucideIcons.calendarCheck, size: 16, color: AppColors.accentSecondary),
-                  title: Text('Weekly Retrospective', style: AppTypography.caption.copyWith(color: AppColors.textPrimary)),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  leading: const Icon(
+                    LucideIcons.calendarCheck,
+                    size: 16,
+                    color: AppColors.accentSecondary,
+                  ),
+                  title: Text(
+                    'Weekly Retrospective',
+                    style: AppTypography.caption.copyWith(
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   onTap: () => WeeklyRetrospectiveModal.show(context),
                 ),
                 ListTile(
                   dense: true,
-                  leading: const Icon(LucideIcons.keyRound, size: 16, color: AppColors.accentPrimary),
-                  title: Text('Key Vault & Backup', style: AppTypography.caption.copyWith(color: AppColors.textPrimary)),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  leading: const Icon(
+                    LucideIcons.keyRound,
+                    size: 16,
+                    color: AppColors.accentPrimary,
+                  ),
+                  title: Text(
+                    'Key Vault & Backup',
+                    style: AppTypography.caption.copyWith(
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const KeyVaultScreen()),
@@ -151,7 +195,10 @@ class DesktopSidebar extends StatelessWidget {
               final pending = OfflineQueueService.instance.pendingCount;
 
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceLight,
                   borderRadius: BorderRadius.circular(8),
@@ -162,13 +209,17 @@ class DesktopSidebar extends StatelessWidget {
                     Icon(
                       isOnline ? LucideIcons.wifi : LucideIcons.wifiOff,
                       size: 14,
-                      color: isOnline ? AppColors.nutritionAccent : AppColors.warningCutoff,
+                      color: isOnline
+                          ? AppColors.nutritionAccent
+                          : AppColors.warningCutoff,
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         isOnline
-                            ? (pending > 0 ? 'Syncing ($pending pending)' : 'Engine Online')
+                            ? (pending > 0
+                                  ? 'Syncing ($pending pending)'
+                                  : 'Engine Online')
                             : 'Offline Mode ($pending queued)',
                         style: AppTypography.caption.copyWith(fontSize: 10),
                       ),
@@ -188,10 +239,14 @@ class DesktopSidebar extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 4),
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.accentPrimary.withOpacity(0.12) : Colors.transparent,
+        color: isSelected
+            ? AppColors.accentPrimary.withOpacity(0.12)
+            : Colors.transparent,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? AppColors.accentPrimary.withOpacity(0.4) : Colors.transparent,
+          color: isSelected
+              ? AppColors.accentPrimary.withOpacity(0.4)
+              : Colors.transparent,
         ),
       ),
       child: ListTile(

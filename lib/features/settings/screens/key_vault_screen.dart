@@ -38,7 +38,11 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
           ),
           title: Row(
             children: [
-              const Icon(LucideIcons.keyRound, color: AppColors.accentPrimary, size: 20),
+              const Icon(
+                LucideIcons.keyRound,
+                color: AppColors.accentPrimary,
+                size: 20,
+              ),
               const SizedBox(width: 10),
               Text('Add API Key to Pool', style: AppTypography.h3),
             ],
@@ -55,7 +59,10 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                     label: const Text('Google Gemini'),
                     selected: _selectedProvider == AiProvider.gemini,
                     onSelected: (val) {
-                      if (val) setDialogState(() => _selectedProvider = AiProvider.gemini);
+                      if (val)
+                        setDialogState(
+                          () => _selectedProvider = AiProvider.gemini,
+                        );
                     },
                     selectedColor: AppColors.accentPrimary.withOpacity(0.2),
                     backgroundColor: AppColors.surfaceLight,
@@ -65,7 +72,10 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                     label: const Text('OpenAI GPT'),
                     selected: _selectedProvider == AiProvider.openAi,
                     onSelected: (val) {
-                      if (val) setDialogState(() => _selectedProvider = AiProvider.openAi);
+                      if (val)
+                        setDialogState(
+                          () => _selectedProvider = AiProvider.openAi,
+                        );
                     },
                     selectedColor: AppColors.accentSecondary.withOpacity(0.2),
                     backgroundColor: AppColors.surfaceLight,
@@ -88,8 +98,12 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                 decoration: InputDecoration(
                   labelText: 'API Key (Encrypted in Vault)',
                   suffixIcon: IconButton(
-                    icon: Icon(_obscureKey ? LucideIcons.eyeOff : LucideIcons.eye, size: 16),
-                    onPressed: () => setDialogState(() => _obscureKey = !_obscureKey),
+                    icon: Icon(
+                      _obscureKey ? LucideIcons.eyeOff : LucideIcons.eye,
+                      size: 16,
+                    ),
+                    onPressed: () =>
+                        setDialogState(() => _obscureKey = !_obscureKey),
                   ),
                 ),
               ),
@@ -129,7 +143,10 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: AppColors.surface,
-        content: Text('Generated backup $filename (${jsonStr.length} bytes)', style: AppTypography.body),
+        content: Text(
+          'Generated backup $filename (${jsonStr.length} bytes)',
+          style: AppTypography.body,
+        ),
       ),
     );
   }
@@ -139,9 +156,13 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          backgroundColor: success ? AppColors.surface : AppColors.warningCutoff,
+          backgroundColor: success
+              ? AppColors.surface
+              : AppColors.warningCutoff,
           content: Text(
-            success ? 'Database successfully restored from JSON.' : 'Restore cancelled or invalid format.',
+            success
+                ? 'Database successfully restored from JSON.'
+                : 'Restore cancelled or invalid format.',
             style: AppTypography.body,
           ),
         ),
@@ -159,7 +180,11 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
         backgroundColor: AppColors.background,
         title: Row(
           children: [
-            const Icon(LucideIcons.shieldCheck, color: AppColors.accentPrimary, size: 20),
+            const Icon(
+              LucideIcons.shieldCheck,
+              color: AppColors.accentPrimary,
+              size: 20,
+            ),
             const SizedBox(width: 10),
             Text('Key Vault & System Control', style: AppTypography.h2),
           ],
@@ -186,9 +211,16 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(LucideIcons.keyRound, color: AppColors.accentPrimary, size: 18),
+                          const Icon(
+                            LucideIcons.keyRound,
+                            color: AppColors.accentPrimary,
+                            size: 18,
+                          ),
                           const SizedBox(width: 8),
-                          Text('AI Key Pool & Auto-Failover', style: AppTypography.h3),
+                          Text(
+                            'AI Key Pool & Auto-Failover',
+                            style: AppTypography.h3,
+                          ),
                         ],
                       ),
                       ElevatedButton.icon(
@@ -213,7 +245,10 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(
-                        child: Text('No keys configured. Add your first key to activate AI.', style: AppTypography.caption),
+                        child: Text(
+                          'No keys configured. Add your first key to activate AI.',
+                          style: AppTypography.caption,
+                        ),
                       ),
                     )
                   else
@@ -230,7 +265,9 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                             color: AppColors.surfaceLight,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: k.isActive ? AppColors.accentPrimary : AppColors.border,
+                              color: k.isActive
+                                  ? AppColors.accentPrimary
+                                  : AppColors.border,
                               width: k.isActive ? 1.5 : 1,
                             ),
                           ),
@@ -240,12 +277,18 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                                 padding: const EdgeInsets.all(6),
                                 decoration: BoxDecoration(
                                   color: k.provider == AiProvider.gemini
-                                      ? AppColors.accentPrimary.withOpacity(0.12)
-                                      : AppColors.accentSecondary.withOpacity(0.12),
+                                      ? AppColors.accentPrimary.withOpacity(
+                                          0.12,
+                                        )
+                                      : AppColors.accentSecondary.withOpacity(
+                                          0.12,
+                                        ),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Icon(
-                                  k.provider == AiProvider.gemini ? LucideIcons.sparkles : LucideIcons.cpu,
+                                  k.provider == AiProvider.gemini
+                                      ? LucideIcons.sparkles
+                                      : LucideIcons.cpu,
                                   size: 14,
                                   color: k.provider == AiProvider.gemini
                                       ? AppColors.accentPrimary
@@ -259,25 +302,51 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        Text(k.label, style: AppTypography.body.copyWith(fontWeight: FontWeight.w600)),
+                                        Text(
+                                          k.label,
+                                          style: AppTypography.body.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
                                         if (k.isActive) ...[
                                           const SizedBox(width: 8),
                                           Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.nutritionAccent.withOpacity(0.2),
-                                              borderRadius: BorderRadius.circular(4),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 6,
+                                              vertical: 2,
                                             ),
-                                            child: Text('ACTIVE', style: AppTypography.caption.copyWith(color: AppColors.nutritionAccent, fontSize: 9)),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.nutritionAccent
+                                                  .withOpacity(0.2),
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                            ),
+                                            child: Text(
+                                              'ACTIVE',
+                                              style: AppTypography.caption
+                                                  .copyWith(
+                                                    color: AppColors
+                                                        .nutritionAccent,
+                                                    fontSize: 9,
+                                                  ),
+                                            ),
                                           ),
                                         ],
                                       ],
                                     ),
                                     const SizedBox(height: 2),
-                                    Text('${k.provider.name.toUpperCase()} • ${k.maskedKey} • ${k.requestCount} requests', style: AppTypography.caption),
+                                    Text(
+                                      '${k.provider.name.toUpperCase()} • ${k.maskedKey} • ${k.requestCount} requests',
+                                      style: AppTypography.caption,
+                                    ),
                                     if (k.lastError != null) ...[
                                       const SizedBox(height: 2),
-                                      Text('Failover notice: ${k.lastError}', style: AppTypography.caption.copyWith(color: AppColors.warningCutoff)),
+                                      Text(
+                                        'Failover notice: ${k.lastError}',
+                                        style: AppTypography.caption.copyWith(
+                                          color: AppColors.warningCutoff,
+                                        ),
+                                      ),
                                     ],
                                   ],
                                 ),
@@ -285,15 +354,22 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                               if (!k.isActive)
                                 TextButton(
                                   onPressed: () async {
-                                    await KeyVaultController.instance.setActiveKey(k.id);
+                                    await KeyVaultController.instance
+                                        .setActiveKey(k.id);
                                     setState(() {});
                                   },
                                   child: const Text('Set Active'),
                                 ),
                               IconButton(
-                                icon: const Icon(LucideIcons.trash2, size: 16, color: AppColors.textMuted),
+                                icon: const Icon(
+                                  LucideIcons.trash2,
+                                  size: 16,
+                                  color: AppColors.textMuted,
+                                ),
                                 onPressed: () async {
-                                  await KeyVaultController.instance.removeKey(k.id);
+                                  await KeyVaultController.instance.removeKey(
+                                    k.id,
+                                  );
                                   setState(() {});
                                 },
                               ),
@@ -320,13 +396,23 @@ class _KeyVaultScreenState extends State<KeyVaultScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(LucideIcons.database, color: AppColors.nutritionAccent, size: 18),
+                      const Icon(
+                        LucideIcons.database,
+                        color: AppColors.nutritionAccent,
+                        size: 18,
+                      ),
                       const SizedBox(width: 8),
-                      Text('Offline Data Vault & Backups', style: AppTypography.h3),
+                      Text(
+                        'Offline Data Vault & Backups',
+                        style: AppTypography.h3,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 6),
-                  Text('Export all journal entries, meal vision records, hydration logs and schedules to local JSON file.', style: AppTypography.caption),
+                  Text(
+                    'Export all journal entries, meal vision records, hydration logs and schedules to local JSON file.',
+                    style: AppTypography.caption,
+                  ),
                   const SizedBox(height: 16),
                   Row(
                     children: [

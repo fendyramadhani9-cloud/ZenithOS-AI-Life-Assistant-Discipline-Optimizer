@@ -28,7 +28,9 @@ class AiFactory {
     var activeKey = KeyVaultController.instance.activeKey;
 
     if (service == null || activeKey == null) {
-      throw Exception('No active API Key found in Key Vault. Please configure your key.');
+      throw Exception(
+        'No active API Key found in Key Vault. Please configure your key.',
+      );
     }
 
     try {
@@ -37,14 +39,17 @@ class AiFactory {
       return result;
     } catch (e) {
       final errorStr = e.toString();
-      final isRateLimitOrQuota = errorStr.contains('429') ||
+      final isRateLimitOrQuota =
+          errorStr.contains('429') ||
           errorStr.contains('Quota') ||
           errorStr.contains('ResourceExhausted') ||
           errorStr.contains('503') ||
           errorStr.contains('500');
 
       if (isRateLimitOrQuota) {
-        debugPrint('[AiFactory] Error encountered: $errorStr. Initiating key failover...');
+        debugPrint(
+          '[AiFactory] Error encountered: $errorStr. Initiating key failover...',
+        );
         final nextKey = await KeyVaultController.instance.rotateToNextKey(
           activeKey.id,
           'Rate limit or Server error: $errorStr',
@@ -53,7 +58,9 @@ class AiFactory {
         if (nextKey != null) {
           final failoverService = getService();
           if (failoverService != null) {
-            debugPrint('[AiFactory] Retrying request with failover key: ${nextKey.label}');
+            debugPrint(
+              '[AiFactory] Retrying request with failover key: ${nextKey.label}',
+            );
             final result = await action(failoverService);
             KeyVaultController.instance.incrementUsage(nextKey.id);
             return result;

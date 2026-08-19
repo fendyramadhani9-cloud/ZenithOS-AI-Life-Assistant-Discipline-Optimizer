@@ -5,7 +5,10 @@ abstract class AiService {
   Future<bool> ping(String apiKey);
 
   /// Analyze food photo bytes for macronutrient breakdown
-  Future<Map<String, dynamic>> analyzeFoodVision(Uint8List imageBytes, {String mimeType = 'image/jpeg'});
+  Future<Map<String, dynamic>> analyzeFoodVision(
+    Uint8List imageBytes, {
+    String mimeType = 'image/jpeg',
+  });
 
   /// Generate dynamic daily schedule from conversational prompt
   Future<List<Map<String, dynamic>>> generateSchedule(String prompt);

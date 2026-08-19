@@ -26,14 +26,14 @@ class StorageService {
   static StorageService get instance => _instance!;
 
   StorageService._({FlutterSecureStorage? secureStorage})
-      : _secureStorage = secureStorage ?? const FlutterSecureStorage();
+    : _secureStorage = secureStorage ?? const FlutterSecureStorage();
 
   static Future<StorageService> init() async {
     if (_instance != null) return _instance!;
 
     await Hive.initFlutter();
     final service = StorageService._();
-    
+
     service._settingsBox = await Hive.openBox(_boxSettings);
     service._journalBox = await Hive.openBox(_boxJournal);
     service._hydrationBox = await Hive.openBox(_boxHydration);
@@ -89,14 +89,17 @@ class StorageService {
   // --- Hydration Storage ---
   Future<void> logHydration(int amountMl, {DateTime? time}) async {
     final now = time ?? DateTime.now();
-    final key = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+    final key =
+        "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     final current = getTodayHydration(date: key);
     await _hydrationBox.put(key, current + amountMl);
   }
 
   int getTodayHydration({String? date}) {
     final now = DateTime.now();
-    final key = date ?? "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+    final key =
+        date ??
+        "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     return (_hydrationBox.get(key, defaultValue: 0) as num).toInt();
   }
 
@@ -149,9 +152,13 @@ class StorageService {
       'timestamp': DateTime.now().toIso8601String(),
       'userName': getUserName(),
       'hydrationGoal': getHydrationGoal(),
-      'hydration': _hydrationBox.toMap().map((k, v) => MapEntry(k.toString(), v)),
+      'hydration': _hydrationBox.toMap().map(
+        (k, v) => MapEntry(k.toString(), v),
+      ),
       'journal': _journalBox.toMap().map((k, v) => MapEntry(k.toString(), v)),
-      'nutrition': _nutritionBox.toMap().map((k, v) => MapEntry(k.toString(), v)),
+      'nutrition': _nutritionBox.toMap().map(
+        (k, v) => MapEntry(k.toString(), v),
+      ),
       'schedule': _scheduleBox.toMap().map((k, v) => MapEntry(k.toString(), v)),
     };
   }

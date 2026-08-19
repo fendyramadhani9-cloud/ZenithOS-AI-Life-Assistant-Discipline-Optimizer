@@ -29,7 +29,9 @@ class FoodVisionService {
       return entry;
     } catch (e) {
       // Fallback to Emergency Nutrition Baseline when offline
-      final fallback = EmergencyNutritionDictionary.fallbackEstimate('Protein Bowl');
+      final fallback = EmergencyNutritionDictionary.fallbackEstimate(
+        'Protein Bowl',
+      );
       final entry = MealNutritionEntry.fromMap(fallback);
       await StorageService.instance.saveMealEntry(entry.toMap());
       return entry;
@@ -62,10 +64,12 @@ class FoodVisionService {
     final all = StorageService.instance.getAllMealEntries();
     return all
         .map((e) => MealNutritionEntry.fromMap(e))
-        .where((e) =>
-            e.timestamp.year == now.year &&
-            e.timestamp.month == now.month &&
-            e.timestamp.day == now.day)
+        .where(
+          (e) =>
+              e.timestamp.year == now.year &&
+              e.timestamp.month == now.month &&
+              e.timestamp.day == now.day,
+        )
         .toList();
   }
 

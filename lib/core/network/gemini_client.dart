@@ -6,7 +6,9 @@ import '../storage/storage_service.dart';
 class GeminiClient {
   static const String defaultModel = 'gemini-1.5-flash';
 
-  static Future<GenerativeModel?> getModel({String modelName = defaultModel}) async {
+  static Future<GenerativeModel?> getModel({
+    String modelName = defaultModel,
+  }) async {
     final apiKey = await StorageService.instance.getApiKey();
     if (apiKey == null || apiKey.trim().isEmpty) {
       return null;
@@ -14,19 +16,14 @@ class GeminiClient {
     return GenerativeModel(
       model: modelName,
       apiKey: apiKey.trim(),
-      generationConfig: GenerationConfig(
-        temperature: 0.2,
-      ),
+      generationConfig: GenerationConfig(temperature: 0.2),
     );
   }
 
   /// Ping test with API key to verify validity
   static Future<bool> testApiKey(String apiKey) async {
     try {
-      final model = GenerativeModel(
-        model: defaultModel,
-        apiKey: apiKey.trim(),
-      );
+      final model = GenerativeModel(model: defaultModel, apiKey: apiKey.trim());
       final response = await model.generateContent([
         Content.text('Ping. Respond with "PONG" only.'),
       ]);
@@ -38,10 +35,15 @@ class GeminiClient {
   }
 
   /// Analyze food plate image bytes to return macro nutritional breakdown in JSON format
-  static Future<Map<String, dynamic>?> analyzeFoodImage(Uint8List imageBytes, {String mimeType = 'image/jpeg'}) async {
+  static Future<Map<String, dynamic>?> analyzeFoodImage(
+    Uint8List imageBytes, {
+    String mimeType = 'image/jpeg',
+  }) async {
     final model = await getModel();
     if (model == null) {
-      throw Exception('Gemini API Key is not configured. Please add it in Onboarding/Settings.');
+      throw Exception(
+        'Gemini API Key is not configured. Please add it in Onboarding/Settings.',
+      );
     }
 
     const prompt = '''
@@ -64,7 +66,7 @@ Respond ONLY with a valid JSON object (no markdown quotes, no backticks, no extr
     final imagePart = DataPart(mimeType, imageBytes);
 
     final response = await model.generateContent([
-      Content.multi([promptPart, imagePart])
+      Content.multi([promptPart, imagePart]),
     ]);
 
     final raw = response.text;
@@ -75,13 +77,16 @@ Respond ONLY with a valid JSON object (no markdown quotes, no backticks, no extr
   }
 
   /// Generate optimized daily schedule from user prompt
-  static Future<List<Map<String, dynamic>>> generateSchedule(String userPrompt) async {
+  static Future<List<Map<String, dynamic>>> generateSchedule(
+    String userPrompt,
+  ) async {
     final model = await getModel();
     if (model == null) {
       throw Exception('Gemini API Key is not configured.');
     }
 
-    final prompt = '''
+    final prompt =
+        '''
 You are ZenithOS Schedule Architect, optimizing daily discipline, deep work, gym, and strict 23:00 sleep cutoff.
 User Request/Context: "$userPrompt"
 
@@ -145,7 +150,8 @@ Requirements:
       return "AI Key is required for generating weekly retrospective briefing.";
     }
 
-    final prompt = '''
+    final prompt =
+        '''
 You are the ZenithOS Executive Performance Coach.
 Analyze the following user data for the past 7 days:
 - Journal Entries count: ${journalEntries.length}

@@ -18,7 +18,7 @@ class AiSchedulerWidget extends StatefulWidget {
 class _AiSchedulerWidgetState extends State<AiSchedulerWidget> {
   final SchedulerAiService _service = SchedulerAiService();
   final TextEditingController _promptController = TextEditingController();
-  
+
   SchedulerState _state = SchedulerState.idle;
   List<ScheduleItem> _currentSchedule = [];
   String? _errorMessage;
@@ -68,7 +68,9 @@ class _AiSchedulerWidgetState extends State<AiSchedulerWidget> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          backgroundColor: success ? AppColors.surface : AppColors.warningCutoff,
+          backgroundColor: success
+              ? AppColors.surface
+              : AppColors.warningCutoff,
           content: Row(
             children: [
               Icon(
@@ -129,21 +131,31 @@ class _AiSchedulerWidgetState extends State<AiSchedulerWidget> {
                       color: AppColors.accentPrimary.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(LucideIcons.bot, color: AppColors.accentPrimary, size: 18),
+                    child: const Icon(
+                      LucideIcons.bot,
+                      color: AppColors.accentPrimary,
+                      size: 18,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('AI Interactive Scheduler', style: AppTypography.h3),
-                      Text('Dynamic Discipline & Sleep Optimizer', style: AppTypography.caption),
+                      Text(
+                        'Dynamic Discipline & Sleep Optimizer',
+                        style: AppTypography.caption,
+                      ),
                     ],
                   ),
                 ],
               ),
               if (_currentSchedule.isNotEmpty)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.surfaceLight,
                     borderRadius: BorderRadius.circular(6),
@@ -151,9 +163,16 @@ class _AiSchedulerWidgetState extends State<AiSchedulerWidget> {
                   ),
                   child: Row(
                     children: [
-                      const Icon(LucideIcons.clock, size: 12, color: AppColors.accentPrimary),
+                      const Icon(
+                        LucideIcons.clock,
+                        size: 12,
+                        color: AppColors.accentPrimary,
+                      ),
                       const SizedBox(width: 4),
-                      Text('${_currentSchedule.length} Blocks', style: AppTypography.timeStamp),
+                      Text(
+                        '${_currentSchedule.length} Blocks',
+                        style: AppTypography.timeStamp,
+                      ),
                     ],
                   ),
                 ),
@@ -168,7 +187,10 @@ class _AiSchedulerWidgetState extends State<AiSchedulerWidget> {
             children: [
               _presetChip('WFH + IaC Deep Work + Gym', LucideIcons.laptop),
               _presetChip('WFO Sprint + Fasting', LucideIcons.building),
-              _presetChip('Weekend Recovery Cut-off', LucideIcons.batteryCharging),
+              _presetChip(
+                'Weekend Recovery Cut-off',
+                LucideIcons.batteryCharging,
+              ),
             ],
           ),
           const SizedBox(height: 12),
@@ -181,12 +203,22 @@ class _AiSchedulerWidgetState extends State<AiSchedulerWidget> {
                   controller: _promptController,
                   style: AppTypography.body,
                   decoration: InputDecoration(
-                    hintText: 'e.g. WFH ngulik IaC Kubernetes, gym 17.30, strict tidur 23.00...',
-                    prefixIcon: const Icon(LucideIcons.sparkles, size: 16, color: AppColors.accentPrimary),
+                    hintText:
+                        'e.g. WFH ngulik IaC Kubernetes, gym 17.30, strict tidur 23.00...',
+                    prefixIcon: const Icon(
+                      LucideIcons.sparkles,
+                      size: 16,
+                      color: AppColors.accentPrimary,
+                    ),
                     suffixIcon: _promptController.text.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(LucideIcons.x, size: 14, color: AppColors.textMuted),
-                            onPressed: () => setState(() => _promptController.clear()),
+                            icon: const Icon(
+                              LucideIcons.x,
+                              size: 14,
+                              color: AppColors.textMuted,
+                            ),
+                            onPressed: () =>
+                                setState(() => _promptController.clear()),
                           )
                         : null,
                   ),
@@ -197,15 +229,24 @@ class _AiSchedulerWidgetState extends State<AiSchedulerWidget> {
               SizedBox(
                 height: 44,
                 child: ElevatedButton.icon(
-                  onPressed: _state == SchedulerState.drafting ? null : _generateDraft,
+                  onPressed: _state == SchedulerState.drafting
+                      ? null
+                      : _generateDraft,
                   icon: _state == SchedulerState.drafting
                       ? const SizedBox(
                           width: 14,
                           height: 14,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.background),
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: AppColors.background,
+                          ),
                         )
                       : const Icon(LucideIcons.sparkles, size: 16),
-                  label: Text(_state == SchedulerState.drafting ? 'Architecting...' : 'Draft AI'),
+                  label: Text(
+                    _state == SchedulerState.drafting
+                        ? 'Architecting...'
+                        : 'Draft AI',
+                  ),
                 ),
               ),
             ],
@@ -218,14 +259,25 @@ class _AiSchedulerWidgetState extends State<AiSchedulerWidget> {
               decoration: BoxDecoration(
                 color: AppColors.warningCutoff.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.warningCutoff.withOpacity(0.4)),
+                border: Border.all(
+                  color: AppColors.warningCutoff.withOpacity(0.4),
+                ),
               ),
               child: Row(
                 children: [
-                  const Icon(LucideIcons.alertCircle, size: 16, color: AppColors.warningCutoff),
+                  const Icon(
+                    LucideIcons.alertCircle,
+                    size: 16,
+                    color: AppColors.warningCutoff,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text(_errorMessage!, style: AppTypography.caption.copyWith(color: AppColors.warningCutoff)),
+                    child: Text(
+                      _errorMessage!,
+                      style: AppTypography.caption.copyWith(
+                        color: AppColors.warningCutoff,
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -60,7 +60,11 @@ class ScheduleTimelineWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(LucideIcons.calendar, color: AppColors.textMuted, size: 32),
+              const Icon(
+                LucideIcons.calendar,
+                color: AppColors.textMuted,
+                size: 32,
+              ),
               const SizedBox(height: 8),
               Text('No timeline blocks loaded.', style: AppTypography.caption),
             ],

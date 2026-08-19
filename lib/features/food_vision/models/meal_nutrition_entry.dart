@@ -40,7 +40,9 @@ class MealNutritionEntry {
 
   factory MealNutritionEntry.fromMap(Map<String, dynamic> map) {
     return MealNutritionEntry(
-      id: map['id']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      id:
+          map['id']?.toString() ??
+          DateTime.now().millisecondsSinceEpoch.toString(),
       foodName: map['foodName'] ?? 'Logged Meal',
       calories: (map['calories'] as num?)?.toInt() ?? 0,
       proteinGrams: (map['proteinGrams'] as num?)?.toDouble() ?? 0.0,

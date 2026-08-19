@@ -73,14 +73,21 @@ class _FoodVisionCardState extends State<FoodVisionCard> {
                       color: AppColors.nutritionAccent.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(LucideIcons.camera, color: AppColors.nutritionAccent, size: 18),
+                    child: const Icon(
+                      LucideIcons.camera,
+                      color: AppColors.nutritionAccent,
+                      size: 18,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Smart Food Vision', style: AppTypography.h3),
-                      Text('Deficit Tracker & Macro Estimation', style: AppTypography.caption),
+                      Text(
+                        'Deficit Tracker & Macro Estimation',
+                        style: AppTypography.caption,
+                      ),
                     ],
                   ),
                 ],
@@ -90,7 +97,10 @@ class _FoodVisionCardState extends State<FoodVisionCard> {
                 icon: const Icon(LucideIcons.uploadCloud, size: 14),
                 label: const Text('Scan Plate'),
                 style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
                 ),
               ),
             ],
@@ -120,15 +130,26 @@ class _FoodVisionCardState extends State<FoodVisionCard> {
                   const SizedBox(
                     width: 20,
                     height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.nutritionAccent),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.nutritionAccent,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('AI Multimodal Vision Active', style: AppTypography.body.copyWith(fontWeight: FontWeight.w600)),
-                        Text('Estimating calories, protein, carbs & fats from plate image...', style: AppTypography.caption),
+                        Text(
+                          'AI Multimodal Vision Active',
+                          style: AppTypography.body.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          'Estimating calories, protein, carbs & fats from plate image...',
+                          style: AppTypography.caption,
+                        ),
                       ],
                     ),
                   ),
@@ -143,14 +164,25 @@ class _FoodVisionCardState extends State<FoodVisionCard> {
               decoration: BoxDecoration(
                 color: AppColors.warningCutoff.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.warningCutoff.withOpacity(0.4)),
+                border: Border.all(
+                  color: AppColors.warningCutoff.withOpacity(0.4),
+                ),
               ),
               child: Row(
                 children: [
-                  const Icon(LucideIcons.alertCircle, size: 16, color: AppColors.warningCutoff),
+                  const Icon(
+                    LucideIcons.alertCircle,
+                    size: 16,
+                    color: AppColors.warningCutoff,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text(_errorMessage!, style: AppTypography.caption.copyWith(color: AppColors.warningCutoff)),
+                    child: Text(
+                      _errorMessage!,
+                      style: AppTypography.caption.copyWith(
+                        color: AppColors.warningCutoff,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -165,7 +197,9 @@ class _FoodVisionCardState extends State<FoodVisionCard> {
               decoration: BoxDecoration(
                 color: AppColors.surfaceLight,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.nutritionAccent.withOpacity(0.4)),
+                border: Border.all(
+                  color: AppColors.nutritionAccent.withOpacity(0.4),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,23 +207,50 @@ class _FoodVisionCardState extends State<FoodVisionCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(_latestScan!.foodName, style: AppTypography.body.copyWith(fontWeight: FontWeight.w700)),
-                      Text('${_latestScan!.calories} kcal', style: AppTypography.timeStamp),
+                      Text(
+                        _latestScan!.foodName,
+                        style: AppTypography.body.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        '${_latestScan!.calories} kcal',
+                        style: AppTypography.timeStamp,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('P: ${_latestScan!.proteinGrams}g', style: AppTypography.caption),
-                      Text('C: ${_latestScan!.carbsGrams}g', style: AppTypography.caption),
-                      Text('F: ${_latestScan!.fatGrams}g', style: AppTypography.caption),
-                      Text('Score: ${_latestScan!.healthScore}/10', style: AppTypography.caption.copyWith(color: AppColors.nutritionAccent)),
+                      Text(
+                        'P: ${_latestScan!.proteinGrams}g',
+                        style: AppTypography.caption,
+                      ),
+                      Text(
+                        'C: ${_latestScan!.carbsGrams}g',
+                        style: AppTypography.caption,
+                      ),
+                      Text(
+                        'F: ${_latestScan!.fatGrams}g',
+                        style: AppTypography.caption,
+                      ),
+                      Text(
+                        'Score: ${_latestScan!.healthScore}/10',
+                        style: AppTypography.caption.copyWith(
+                          color: AppColors.nutritionAccent,
+                        ),
+                      ),
                     ],
                   ),
                   if (_latestScan!.insights.isNotEmpty) ...[
                     const SizedBox(height: 6),
-                    Text(_latestScan!.insights, style: AppTypography.caption.copyWith(fontStyle: FontStyle.italic)),
+                    Text(
+                      _latestScan!.insights,
+                      style: AppTypography.caption.copyWith(
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
                   ],
                 ],
               ),

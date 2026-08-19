@@ -3,11 +3,7 @@ class TodoItem {
   final String title;
   final bool isCompleted;
 
-  TodoItem({
-    required this.id,
-    required this.title,
-    this.isCompleted = false,
-  });
+  TodoItem({required this.id, required this.title, this.isCompleted = false});
 
   TodoItem copyWith({String? id, String? title, bool? isCompleted}) {
     return TodoItem(
@@ -18,16 +14,16 @@ class TodoItem {
   }
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'title': title,
-        'isCompleted': isCompleted,
-      };
+    'id': id,
+    'title': title,
+    'isCompleted': isCompleted,
+  };
 
   factory TodoItem.fromMap(Map<String, dynamic> map) => TodoItem(
-        id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
-        title: map['title'] ?? '',
-        isCompleted: map['isCompleted'] ?? false,
-      );
+    id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
+    title: map['title'] ?? '',
+    isCompleted: map['isCompleted'] ?? false,
+  );
 }
 
 class JournalEntry {
@@ -46,21 +42,22 @@ class JournalEntry {
   });
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'date': date.toIso8601String(),
-        'todos': todos.map((e) => e.toMap()).toList(),
-        'unfilteredStory': unfilteredStory,
-        'isPartnerShared': isPartnerShared,
-      };
+    'id': id,
+    'date': date.toIso8601String(),
+    'todos': todos.map((e) => e.toMap()).toList(),
+    'unfilteredStory': unfilteredStory,
+    'isPartnerShared': isPartnerShared,
+  };
 
   factory JournalEntry.fromMap(Map<String, dynamic> map) => JournalEntry(
-        id: map['id'] ?? DateTime.now().toIso8601String(),
-        date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
-        todos: (map['todos'] as List?)
-                ?.map((e) => TodoItem.fromMap(Map<String, dynamic>.from(e as Map)))
-                .toList() ??
-            [],
-        unfilteredStory: map['unfilteredStory'] ?? '',
-        isPartnerShared: map['isPartnerShared'] ?? false,
-      );
+    id: map['id'] ?? DateTime.now().toIso8601String(),
+    date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
+    todos:
+        (map['todos'] as List?)
+            ?.map((e) => TodoItem.fromMap(Map<String, dynamic>.from(e as Map)))
+            .toList() ??
+        [],
+    unfilteredStory: map['unfilteredStory'] ?? '',
+    isPartnerShared: map['isPartnerShared'] ?? false,
+  );
 }

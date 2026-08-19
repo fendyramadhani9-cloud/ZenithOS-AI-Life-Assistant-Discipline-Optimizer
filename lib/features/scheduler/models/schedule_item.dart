@@ -56,7 +56,9 @@ class ScheduleItem {
 
   factory ScheduleItem.fromMap(Map<String, dynamic> map) {
     return ScheduleItem(
-      id: map['id']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      id:
+          map['id']?.toString() ??
+          DateTime.now().millisecondsSinceEpoch.toString(),
       startTime: map['startTime'] ?? '08:00',
       endTime: map['endTime'] ?? '09:00',
       title: map['title'] ?? 'Task',

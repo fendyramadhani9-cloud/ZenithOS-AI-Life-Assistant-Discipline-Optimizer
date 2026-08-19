@@ -82,7 +82,9 @@ class OfflineQueueService extends ChangeNotifier {
         _isOnline = online;
         notifyListeners();
         if (_isOnline) {
-          debugPrint('[OfflineQueueService] Connection restored. Flushing queue...');
+          debugPrint(
+            '[OfflineQueueService] Connection restored. Flushing queue...',
+          );
           flushQueue();
         }
       }
@@ -102,7 +104,9 @@ class OfflineQueueService extends ChangeNotifier {
 
     await _box.put(item.id, jsonEncode(item.toMap()));
     notifyListeners();
-    debugPrint('[OfflineQueueService] Queued offline action: ${type.name} (Total: ${_box.length})');
+    debugPrint(
+      '[OfflineQueueService] Queued offline action: ${type.name} (Total: ${_box.length})',
+    );
 
     if (_isOnline) {
       flushQueue();
@@ -133,9 +137,13 @@ class OfflineQueueService extends ChangeNotifier {
 
         // Successfully synced
         await _box.delete(key);
-        debugPrint('[OfflineQueueService] Successfully processed queue item: $key');
+        debugPrint(
+          '[OfflineQueueService] Successfully processed queue item: $key',
+        );
       } catch (e) {
-        debugPrint('[OfflineQueueService] Failed processing queue item $key ($e). Retrying next cycle.');
+        debugPrint(
+          '[OfflineQueueService] Failed processing queue item $key ($e). Retrying next cycle.',
+        );
       }
     }
 

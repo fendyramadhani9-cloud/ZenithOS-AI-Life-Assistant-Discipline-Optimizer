@@ -25,11 +25,14 @@ class MacroRingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final calorieRatio = (currentCalories / targetCalories).clamp(0.0, 1.0);
     final proteinRatio = (currentProtein / targetProtein).clamp(0.0, 1.0);
-    
+
     // Weight cut progress from start 70.0 kg down to 64.0 kg
     const startWeight = 70.0;
     final totalLossNeeded = startWeight - targetWeight; // 6.0 kg
-    final lossAchieved = (startWeight - currentWeight).clamp(0.0, totalLossNeeded);
+    final lossAchieved = (startWeight - currentWeight).clamp(
+      0.0,
+      totalLossNeeded,
+    );
     final weightProgress = (lossAchieved / totalLossNeeded).clamp(0.0, 1.0);
 
     return Container(
@@ -48,9 +51,16 @@ class MacroRingWidget extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(LucideIcons.scale, size: 14, color: AppColors.nutritionAccent),
+                  const Icon(
+                    LucideIcons.scale,
+                    size: 14,
+                    color: AppColors.nutritionAccent,
+                  ),
                   const SizedBox(width: 6),
-                  Text('Target Cut: 70kg -> 64kg', style: AppTypography.caption),
+                  Text(
+                    'Target Cut: 70kg -> 64kg',
+                    style: AppTypography.caption,
+                  ),
                 ],
               ),
               Text(
@@ -66,7 +76,9 @@ class MacroRingWidget extends StatelessWidget {
               value: weightProgress,
               minHeight: 6,
               backgroundColor: AppColors.background,
-              valueColor: const AlwaysStoppedAnimation<Color>(AppColors.nutritionAccent),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                AppColors.nutritionAccent,
+              ),
             ),
           ),
           const SizedBox(height: 14),
@@ -85,13 +97,17 @@ class MacroRingWidget extends StatelessWidget {
                       value: calorieRatio,
                       strokeWidth: 6,
                       backgroundColor: AppColors.background,
-                      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.accentPrimary),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        AppColors.accentPrimary,
+                      ),
                     ),
                     CircularProgressIndicator(
                       value: proteinRatio,
                       strokeWidth: 3,
                       backgroundColor: Colors.transparent,
-                      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.nutritionAccent),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        AppColors.nutritionAccent,
+                      ),
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -103,7 +119,10 @@ class MacroRingWidget extends StatelessWidget {
                             fontSize: 12,
                           ),
                         ),
-                        Text('kcal', style: AppTypography.caption.copyWith(fontSize: 9)),
+                        Text(
+                          'kcal',
+                          style: AppTypography.caption.copyWith(fontSize: 9),
+                        ),
                       ],
                     ),
                   ],
@@ -116,11 +135,23 @@ class MacroRingWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _macroRow('Calories Deficit', '$currentCalories / $targetCalories kcal', AppColors.accentPrimary),
+                    _macroRow(
+                      'Calories Deficit',
+                      '$currentCalories / $targetCalories kcal',
+                      AppColors.accentPrimary,
+                    ),
                     const SizedBox(height: 4),
-                    _macroRow('Protein Target', '${currentProtein.toInt()} / ${targetProtein.toInt()} g', AppColors.nutritionAccent),
+                    _macroRow(
+                      'Protein Target',
+                      '${currentProtein.toInt()} / ${targetProtein.toInt()} g',
+                      AppColors.nutritionAccent,
+                    ),
                     const SizedBox(height: 4),
-                    _macroRow('Deficit Buffer', '-${(targetCalories - currentCalories).clamp(0, 3000)} kcal', AppColors.accentSecondary),
+                    _macroRow(
+                      'Deficit Buffer',
+                      '-${(targetCalories - currentCalories).clamp(0, 3000)} kcal',
+                      AppColors.accentSecondary,
+                    ),
                   ],
                 ),
               ),
@@ -137,7 +168,11 @@ class MacroRingWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(width: 6, height: 6, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+            Container(
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            ),
             const SizedBox(width: 6),
             Text(label, style: AppTypography.caption),
           ],
