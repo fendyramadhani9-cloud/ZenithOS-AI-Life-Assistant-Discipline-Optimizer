@@ -9,15 +9,13 @@ class AppTheme {
       brightness: Brightness.dark,
       scaffoldBackgroundColor: AppColors.background,
       colorScheme: const ColorScheme.dark(
-        background: AppColors.background,
         surface: AppColors.surface,
         primary: AppColors.accentPrimary,
         secondary: AppColors.accentSecondary,
         error: AppColors.warningCutoff,
-        onBackground: AppColors.textPrimary,
         onSurface: AppColors.textPrimary,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(

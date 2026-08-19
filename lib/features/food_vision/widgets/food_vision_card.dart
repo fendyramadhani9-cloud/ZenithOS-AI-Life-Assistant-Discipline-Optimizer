@@ -17,22 +17,8 @@ class FoodVisionCard extends StatefulWidget {
 class _FoodVisionCardState extends State<FoodVisionCard> {
   final FoodVisionService _service = FoodVisionService();
   bool _isAnalyzing = false;
-  Uint8List? _previewBytes;
   MealNutritionEntry? _latestScan;
-  List<MealNutritionEntry> _todayMeals = [];
   String? _errorMessage;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadMeals();
-  }
-
-  void _loadMeals() {
-    setState(() {
-      _todayMeals = _service.getTodayMeals();
-    });
-  }
 
   Future<void> _pickAndScanPlate() async {
     setState(() {
@@ -43,7 +29,6 @@ class _FoodVisionCardState extends State<FoodVisionCard> {
     if (bytes == null) return;
 
     setState(() {
-      _previewBytes = bytes;
       _isAnalyzing = true;
     });
 
@@ -52,7 +37,6 @@ class _FoodVisionCardState extends State<FoodVisionCard> {
       setState(() {
         _latestScan = scanResult;
         _isAnalyzing = false;
-        _loadMeals();
       });
     } catch (e) {
       setState(() {

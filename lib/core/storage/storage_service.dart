@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -14,7 +13,6 @@ class StorageService {
 
   static const String _keyApiKey = 'gemini_api_key';
   static const String _keyUserName = 'user_name';
-  static const String _keyWeightTarget = 'weight_target';
   static const String _keyHydrationGoal = 'hydration_goal';
 
   final FlutterSecureStorage _secureStorage;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_typography.dart';
-import '../../../core/network_queue/offline_queue_service.dart';
 import '../../../core/storage/storage_service.dart';
 import '../../../core/utils/backup_service.dart';
 import '../../../core/utils/responsive_layout.dart';
