@@ -13,7 +13,7 @@ on:
       release_notes:
         description: 'Release Notes / Changelog'
         required: false
-        default: 'Production release of ZenithOS (Life Assistant & Discipline Optimizer).'
+        default: 'Official production release of ZenithOS (Life Assistant & Discipline Optimizer).'
 
 permissions:
   contents: write
@@ -58,9 +58,10 @@ jobs:
       - name: Stage Release Artifacts
         run: |
           mkdir -p release_artifacts
-          TAG_NAME="${{ github.event.inputs.release_version || github.ref_name }}"
-          cp build/app/outputs/flutter-apk/app-release.apk release_artifacts/zenith-os-android-${TAG_NAME}.apk
-          tar -czf release_artifacts/zenith-os-web-${TAG_NAME}.tar.gz -C build/web .
+          TAG="${{ github.event.inputs.release_version || github.ref_name }}"
+          cp build/app/outputs/flutter-apk/app-release.apk release_artifacts/zenith-os-android-${TAG}.apk
+          cp build/app/outputs/flutter-apk/app-release.apk release_artifacts/zenith-os-android.apk
+          tar -czf release_artifacts/zenith-os-web-${TAG}.tar.gz -C build/web .
 
       # Upload Artifacts to GitHub Actions Run
       - name: Upload Build Artifacts to Actions
@@ -69,19 +70,21 @@ jobs:
           name: zenith-production-bundle
           path: release_artifacts/*
 
-      # Create Official GitHub Release with Attached Assets
+      # Create Official GitHub Release with Attached Direct APK Assets
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.release_version || github.ref_name }}
           name: ZenithOS Release ${{ github.event.inputs.release_version || github.ref_name }}
+          draft: false
+          prerelease: false
           body: |
             ### 🚀 ZenithOS — Production Release (${{ github.event.inputs.release_version || github.ref_name }})
             
             ${{ github.event.inputs.release_notes || 'Official production release of ZenithOS (Life Assistant & Discipline Optimizer).' }}
             
-            #### 📦 Download Assets:
-            - **📱 Android Native APK**: [`zenith-os-android-${{ github.event.inputs.release_version || github.ref_name }}.apk`](https://github.com/${{ github.repository }}/releases/download/${{ github.event.inputs.release_version || github.ref_name }}/zenith-os-android-${{ github.event.inputs.release_version || github.ref_name }}.apk) *(Install langsung di HP Android, Zero Backend required)*
+            #### 📦 Direct Download Assets:
+            - **📱 Android APK (Direct Install)**: [`zenith-os-android-${{ github.event.inputs.release_version || github.ref_name }}.apk`](https://github.com/${{ github.repository }}/releases/download/${{ github.event.inputs.release_version || github.ref_name }}/zenith-os-android-${{ github.event.inputs.release_version || github.ref_name }}.apk) *(Langsung download file .apk tanpa ekstrak)*
             - **🌐 Web Deployment Bundle**: `zenith-os-web-${{ github.event.inputs.release_version || github.ref_name }}.tar.gz` *(Untuk Nginx / Docker Homelab)*
             
             #### 🛡️ Verification & Security:
@@ -89,7 +92,8 @@ jobs:
             - Strict Zero-Emoji UI with Cyber-Obsidian Minimalist Theme (`lucide_icons_flutter`).
             - Offline-first storage with BYOK Key Vault failover (Google Gemini & OpenAI).
           files: |
-            release_artifacts/*.apk
-            release_artifacts/*.tar.gz
+            release_artifacts/zenith-os-android-*.apk
+            release_artifacts/zenith-os-android.apk
+            release_artifacts/zenith-os-web-*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

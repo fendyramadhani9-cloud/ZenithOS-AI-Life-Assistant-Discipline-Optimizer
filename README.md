@@ -19,16 +19,16 @@
 <table>
   <tr>
     <td align="center" width="50%">
-      <a href="https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer/releases/latest">
-        <img src="https://img.shields.io/badge/📱_DOWNLOAD_ANDROID_APK-Direct_Install_(Zero_Backend)-10B981?style=for-the-badge&labelColor=064E3B" alt="Download APK" />
+      <a href="https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer/releases/download/v1.0.0/zenith-os-android-v1.0.0.apk">
+        <img src="https://img.shields.io/badge/📱_DOWNLOAD_ANDROID_.APK-Direct_Download_(v1.0.0)-10B981?style=for-the-badge&labelColor=064E3B" alt="Download APK" />
       </a>
-      <br/><sub>Install langsung di HP Android Anda</sub>
+      <br/><sub>Langsung unduh file <b>zenith-os-android-v1.0.0.apk</b> (Siap Install)</sub>
     </td>
     <td align="center" width="50%">
-      <a href="#option-1-running-web-version-via-docker-desktop--homelab">
-        <img src="https://img.shields.io/badge/🌐_RUN_WEB_PORTAL-Docker_Compose_(Port_8080)-0284C7?style=for-the-badge&labelColor=0C4A6E" alt="Run Web" />
+      <a href="https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer/releases">
+        <img src="https://img.shields.io/badge/📦_GITHUB_RELEASES-View_All_Versions-0284C7?style=for-the-badge&labelColor=0C4A6E" alt="GitHub Releases" />
       </a>
-      <br/><sub>Jalankan di Web Desktop / Homelab via Docker</sub>
+      <br/><sub>Halaman Rilis Resmi & Changelog Lengkap</sub>
     </td>
   </tr>
 </table>
