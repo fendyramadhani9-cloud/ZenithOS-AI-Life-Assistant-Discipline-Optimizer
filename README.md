@@ -3,10 +3,11 @@
 # ZenithOS — AI Life Assistant & Discipline Optimizer
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-38BDF8?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](./LICENSE)
-[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
+[![Flutter](https://img.shields.io/badge/Flutter-3.27_LTS-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com)
 [![Offline First](https://img.shields.io/badge/Offline--First-Resilient-34D399?style=for-the-badge&logo=hive&logoColor=white)](#)
 [![Google Gemini](https://img.shields.io/badge/AI-Google_Gemini_&_GPT--4o-818CF8?style=for-the-badge&logo=google&logoColor=white)](https://aistudio.google.com)
+[![CI/CD](https://img.shields.io/badge/GitHub_Actions-Automated_CI%2FCD-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer/actions)
 
 **ZenithOS** is an enterprise-grade, offline-first personal assistant, daily discipline optimizer, and resilient knowledge vault built with Flutter (Dart) and Node.js. It features a responsive Cyber-Obsidian UI tailored for both Desktop Web and Native Android Mobile.
 
@@ -14,9 +15,9 @@
 
 ---
 
-## 1. Design System & Iconography Rules
+## 1. Strict Design System & Iconography Rules
 
-- **Strict Zero-Emoji Policy**: No keyboard emojis in navigation, buttons, metrics, or status badges. All visual indicators strictly use vector icons from `lucide_icons` (e.g., `LucideIcons.terminal`, `LucideIcons.calendar`, `LucideIcons.camera`, `LucideIcons.droplets`, `LucideIcons.keyRound`, `LucideIcons.shieldCheck`, `LucideIcons.lock`, `LucideIcons.share2`).
+- **Strict Zero-Emoji Policy**: No keyboard emojis in navigation, buttons, metrics, or status badges. All visual indicators strictly use vector icons from `lucide_icons_flutter` (e.g., `LucideIcons.terminal`, `LucideIcons.calendar`, `LucideIcons.camera`, `LucideIcons.droplets`, `LucideIcons.keyRound`, `LucideIcons.shieldCheck`, `LucideIcons.lock`, `LucideIcons.share2`).
 - **Cyber-Obsidian Minimalist Palette (OLED Friendly)**:
   - **Background**: `#0A0D14` (Deep Obsidian Void)
   - **Card Surface**: `#121722` with border `Border.all(color: Color(0xFF1E2638), width: 1)`
@@ -41,7 +42,7 @@
 
 ### C. Multi-Platform Alarm Service
 - **Web / Desktop**: Dispatches webhook requests to `http://localhost:3000/api/alarm` to trigger WhatsApp Desktop bot reminders.
-- **Android APK**: Native exact full-screen alarms using the `alarm` package.
+- **Android APK**: Native exact full-screen alarms using the `alarm` package with core library desugaring and multi-dex support.
 - **Mandatory Sleep Cutoffs**:
   - `22:30`: Soft Reminder (Commit code, wrap up IaC, close IDE).
   - `23:00`: Hard Bedtime Alarm (6-hour cellular recovery window until 05:00 wake).
@@ -63,14 +64,85 @@
 
 ---
 
-## 3. Project Structure
+## 3. CI/CD Architecture & Pipeline Workflow
+
+ZenithOS mengimplementasikan pipeline CI/CD berstandar enterprise menggunakan **GitHub Actions** yang memisahkan verifikasi kualitas kode (*Continuous Integration*) dan pengiriman rilis terkontrol dengan *Approval Gate* (*Continuous Delivery*).
+
+```mermaid
+flowchart TD
+    subgraph Trigger [Event Triggers]
+        PR[Pull Request to main]
+        Push[Push to main]
+        Tag[Push Release Tag v*.*.*]
+        Manual[Manual Workflow Dispatch]
+    end
+
+    subgraph CI [Continuous Integration - ci.yml]
+        Lint[1. Flutter Lint & Static Analysis<br/>dart format + flutter analyze]
+        WebBuild[2. Verify Flutter Web Build<br/>flutter build web --release]
+        AndroidBuild[3. Verify Android APK Build<br/>flutter build apk --release]
+        BackendCheck[4. Node.js 22 LTS Verification<br/>Syntax & Dependency Check]
+    end
+
+    subgraph CD [Continuous Delivery - cd.yml]
+        Gate{Production Approval Gate<br/>Manual Sign-off by Owner}
+        AssembleWeb[Build Production Web Bundle<br/>zenith-os-web-vX.X.X.tar.gz]
+        AssembleAPK[Build Production Android APK<br/>zenith-os-android-vX.X.X.apk]
+        Release[Publish to GitHub Releases<br/>& Upload Artifacts]
+    end
+
+    PR --> Lint
+    Push --> Lint
+    Lint --> WebBuild
+    Lint --> AndroidBuild
+    Lint --> BackendCheck
+
+    Tag --> Gate
+    Manual --> Gate
+    Gate -->|Approved| AssembleWeb
+    Gate -->|Approved| AssembleAPK
+    AssembleWeb --> Release
+    AssembleAPK --> Release
+```
+
+### Tahapan CI/CD Detail:
+
+#### 1. Continuous Integration (`.github/workflows/ci.yml`)
+- **Pemicu**: Setiap Pull Request (PR) atau Push langsung ke branch `main`.
+- **Eksekusi Paralel & Bertahap**:
+  1. **Static Analysis & Formatting**: Menjalankan `dart format .` dan `flutter analyze --no-fatal-infos` dengan rule strict zero-error.
+  2. **Flutter Web Build Verification**: Memastikan kompilasi Web JavaScript (`build/web`) bebas dari error platform.
+  3. **Android APK Build Verification**: Memvalidasi build APK rilis Android dengan Gradle 8.4 dan `minSdk 24`.
+  4. **Backend Automation Verification**: Memverifikasi sintaks Node.js 22 LTS dan integrasi bot WhatsApp Baileys.
+- **Tujuan**: Mencegah regresi kode dan memvalidasi kontribusi inovasi/bugfix secara otomatis sebelum masuk ke branch produksi.
+
+#### 2. Continuous Delivery dengan Approval Gate (`.github/workflows/cd.yml`)
+- **Pemicu**: Pembuatan tag rilis (contoh: `v1.0.0`) atau pemicu manual (*Workflow Dispatch*).
+- **Security Approval Gate**: Menggunakan environment GitHub `production` dengan proteksi *Required Reviewers*. Rilis tidak akan diproses tanpa persetujuan eksplisit dari Platform Engineer / Owner.
+- **Artefak Output**:
+  - `zenith-os-android-vX.X.X.apk` (Instalasi native Android tanpa ketergantungan server luar).
+  - `zenith-os-web-vX.X.X.tar.gz` (Web bundle untuk Nginx/Docker homelab).
+  - Integrasi otomatis ke halaman **GitHub Releases** dengan catatan rilis (*changelog*).
+
+---
+
+## 4. Project Structure
 
 ```
 .
+├── .github/
+│   └── workflows/
+│       ├── ci.yml                         # Continuous Integration (Lint, Web, Android, Backend)
+│       └── cd.yml                         # Continuous Delivery with Production Approval Gate
 ├── android/
-│   └── app/src/main/AndroidManifest.xml   # Complete permissions (exact alarm, wake lock, camera, calendar)
+│   ├── app/
+│   │   ├── build.gradle                   # Groovy DSL, minSdk 24, desugaring, multidex
+│   │   └── src/main/AndroidManifest.xml   # Android permissions & alarms
+│   ├── build.gradle                       # Root Gradle config
+│   ├── settings.gradle                    # Declarative Flutter plugin loader
+│   └── gradle.properties                  # Optimized JVM args & AndroidX flags
 ├── backend/
-│   ├── Dockerfile                         # Node.js 20 Alpine container
+│   ├── Dockerfile                         # Node.js 22 Alpine container
 │   ├── package.json                       # Express, @whiskeysockets/baileys, node-cron
 │   └── src/
 │       ├── index.js                       # Webhook listener & cron scheduler
@@ -79,7 +151,8 @@
 │   ├── Dockerfile                         # Multi-stage Flutter SDK -> Nginx Alpine
 │   └── nginx.conf                         # Reverse proxy and SPA routing
 ├── docker-compose.yml                     # Multi-container orchestration
-├── pubspec.yaml                           # Flutter production dependencies
+├── pubspec.yaml                           # Flutter dependencies (lucide_icons_flutter)
+├── analysis_options.yaml                  # Flutter linter configuration
 └── lib/
     ├── core/
     │   ├── constants/ (app_colors.dart, app_typography.dart, app_theme.dart)
@@ -103,13 +176,14 @@
 
 ---
 
-## 4. Deployment & Quick Start Guide
+## 5. Deployment & Quick Start Guide
 
 ### Option 1: Running Web Version via Docker (Desktop & Homelab)
 
 1. Clone repository and navigate to root directory:
    ```bash
-   cd "d:/Projects/Web/my app"
+   git clone https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer.git
+   cd ZenithOS-AI-Life-Assistant-Discipline-Optimizer
    ```
 
 2. Start containers via Docker Compose:
@@ -139,7 +213,7 @@
 2. **Install APK**: Transfer file `build/app/outputs/flutter-apk/app-release.apk` ke HP Android Anda lalu lakukan instalasi.
 3. **Buka Aplikasi ZenithOS**: Pada layar pertama (*Onboarding*), Anda akan diminta memasukkan API Key Anda sendiri (**Zero Backend Required** — HP Anda langsung berkomunikasi secara terenkripsi ke endpoint AI).
 
-####  Cara Mendapatkan API Key Google Gemini (100% Gratis):
+#### 🔑 Cara Mendapatkan API Key Google Gemini (100% Gratis):
 1. Buka browser dan kunjungi **[Google AI Studio](https://aistudio.google.com/)**.
 2. Login menggunakan akun Google Anda.
 3. Klik tombol **"Get API key"** di sidebar kiri atau pojok kanan atas.
@@ -155,30 +229,6 @@
 > **Key Failover (Opsional)**: Anda dapat membuat lebih dari satu API Key di Google AI Studio lalu menambahkannya ke menu **Key Vault & Backup** di ZenithOS. Jika satu key terkena limit harian (*rate limit 429*), ZenithOS akan otomatis merotasi ke key cadangan berikutnya tanpa memutus interaksi.
 
 *(Alternatif: Jika ingin menggunakan OpenAI GPT-4o, Anda bisa mendapatkan API Key dari [platform.openai.com/api-keys](https://platform.openai.com/api-keys)).*
-
----
-
-## 5. CI/CD Pipeline (GitHub Actions)
-
-Proyek ini telah dilengkapi pipeline CI/CD otomatis di folder `.github/workflows/`:
-
-###  Continuous Integration (`ci.yml`)
-- **Pemicu (Trigger)**: Otomatis berjalan setiap kali ada **Pull Request (PR)** atau **Push** ke branch `main`.
-- **Tugas Otomatis**:
-  1. *Code formatting check* (`dart format`).
-  2. *Static code analysis & linting* (`flutter analyze`).
-  3. Validasi *compile* build **Flutter Web**.
-  4. Validasi *compile* build **Android APK**.
-  5. Pemeriksaan sintaks backend Node.js & dependencies.
-- **Tujuan**: Memastikan inovasi fitur baru atau perbaikan bug dari kontributor tidak merusak sistem yang ada sebelum di-merge.
-
-###  Continuous Delivery (`cd.yml`) dengan Approval Gate
-- **Pemicu (Trigger)**: Saat membuat tag rilis baru (misal `v1.0.0`) atau dijalankan manual via *Actions Dispatch*.
-- **Approval Gate (Persetujuan Wajib)**: Menggunakan GitHub Environment `production` dengan aturan *Required Reviewers*. Rilis tidak akan dipublikasikan sebelum Anda memberikan persetujuan (*Review deployments $\rightarrow$ Approve*).
-- **Hasil Rilis (Artifacts)**:
-  - `zenith-os-android-v1.0.0.apk` (Siap install langsung di HP).
-  - `zenith-os-web-v1.0.0.tar.gz` (Bundle web siap deploy di Nginx/Server).
-  - Terintegrasi otomatis ke halaman **GitHub Releases**.
 
 ---
 
@@ -214,12 +264,12 @@ in the Software without restriction...
 
 ---
 
-## 👨‍💻 Lead Architect & Author
+## 👨‍💻 Platform Engineer & Creator
 
 <div align="center">
 
 ### **Fendy Ramadhani**
-*Lead Software Architect, Cloud & AI Systems Designer*
+*Platform Engineer | Cloud & AI Systems Infrastructure*
 
 [![GitHub](https://img.shields.io/badge/GitHub-fendyramadhani9--cloud-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/fendyramadhani9-cloud)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Fendy_Ramadhani-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fendy-ramadhani9/)
@@ -228,11 +278,10 @@ in the Software without restriction...
 
 </div>
 
-> *"Discipline equals freedom. Automate the routine, optimize recovery, and build with resilient architecture."*
+> *"Discipline equals freedom. Automate the routine, optimize recovery, and build with resilient infrastructure."*
 
 ---
 
 <div align="center">
   <sub>Built with high discipline for high performers. © 2026 <b>ZenithOS</b> by <b>Fendy Ramadhani</b>.</sub>
 </div>
-
