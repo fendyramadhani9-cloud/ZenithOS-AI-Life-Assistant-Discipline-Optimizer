@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient (Obsidian Void) -->
+    <radialGradient id="icon-bg-rad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#141B29" />
+      <stop offset="60%" stop-color="#0A0D14" />
+      <stop offset="100%" stop-color="#05070B" />
+    </radialGradient>
+
+    <!-- Z Monogram Gradient (Electric Sky to Soft Indigo) -->
+    <linearGradient id="z-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#818CF8" />
+    </linearGradient>
+
+    <!-- Crystal Facet Gradients -->
+    <linearGradient id="facet-top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0.3" />
+    </linearGradient>
+
+    <linearGradient id="facet-mid" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#818CF8" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.4" />
+    </linearGradient>
+
+    <linearGradient id="facet-bot" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.3" />
+    </linearGradient>
+
+    <!-- Hex Prism Border Gradient -->
+    <linearGradient id="hex-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#1E2638" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#818CF8" stop-opacity="0.8" />
+    </linearGradient>
+
+    <!-- Glow Filters -->
+    <filter id="core-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="subtle-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="drop-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#000000" flood-opacity="0.8" />
+    </filter>
+  </defs>
+
+  <!-- Base Icon Squircle Canvas (Standard Android / iOS Rounded App Icon) -->
+  <rect width="512" height="512" rx="112" fill="url(#icon-bg-rad)" />
+  <rect width="508" height="508" x="2" y="2" rx="110" fill="none" stroke="#1E2638" stroke-width="2" opacity="0.6" />
+
+  <!-- Outer Hexagonal Prism Core Silhouette -->
+  <g transform="translate(256, 256)">
+    <!-- Ambient Aura -->
+    <circle cx="0" cy="0" r="140" fill="#38BDF8" opacity="0.06" filter="url(#core-glow)" />
+
+    <!-- Hexagon Outer Boundary Frame -->
+    <polygon points="0,-180 156,-90 156,90 0,180 -156,90 -156,-90" fill="#0C101A" stroke="url(#hex-border)" stroke-width="2.5" filter="url(#drop-shadow)" />
+
+    <!-- Isometric Crystal Facets (Obsidian Shards) -->
+    <!-- Top-Right Facet -->
+    <polygon points="0,-176 152,-88 0,0" fill="url(#facet-top)" opacity="0.18" />
+    <!-- Bottom-Left Facet -->
+    <polygon points="0,176 -152,88 0,0" fill="url(#facet-bot)" opacity="0.22" />
+    <!-- Left-Top Facet -->
+    <polygon points="-152,-88 0,-176 0,0" fill="url(#facet-mid)" opacity="0.12" />
+    <!-- Right-Bottom Facet -->
+    <polygon points="152,88 0,176 0,0" fill="url(#facet-top)" opacity="0.15" />
+
+    <!-- Geometric Monogram "Z" (Prism Slice Symmetrical) -->
+    <!-- Top Horizontal Crystal Bar -->
+    <path d="M -100,-115 L 90,-115 L 105,-85 L -55,-85 Z" fill="url(#z-gradient)" filter="url(#subtle-glow)" />
+    <polygon points="-100,-115 -55,-85 -70,-85 -115,-115" fill="#FFFFFF" opacity="0.4" />
+
+    <!-- Center Diagonal Crystal Blade -->
+    <path d="M 90,-115 L 105,-85 L -65,115 L -95,115 Z" fill="url(#z-gradient)" filter="url(#core-glow)" />
+    <!-- Sharp Core Shard Edge -->
+    <polygon points="105,-85 90,-115 -75,95 -65,115" fill="#E0F2FE" opacity="0.3" />
+
+    <!-- Bottom Horizontal Crystal Bar -->
+    <path d="M -95,85 L 55,85 L 100,115 L -95,115 Z" fill="url(#z-gradient)" filter="url(#subtle-glow)" />
+    <polygon points="55,85 100,115 85,115 40,85" fill="#FFFFFF" opacity="0.4" />
+
+    <!-- Central Precision Node (Cyan Energy Core) -->
+    <circle cx="0" cy="0" r="8" fill="#38BDF8" filter="url(#core-glow)" />
+    <circle cx="0" cy="0" r="3.5" fill="#FFFFFF" />
+
+    <!-- Precision Corner Accents -->
+    <line x1="0" y1="-180" x2="0" y2="-192" stroke="#38BDF8" stroke-width="2" />
+    <line x1="0" y1="180" x2="0" y2="192" stroke="#818CF8" stroke-width="2" />
+    <line x1="-156" y1="-90" x2="-166" y2="-96" stroke="#38BDF8" stroke-width="2" />
+    <line x1="156" y1="90" x2="166" y2="96" stroke="#818CF8" stroke-width="2" />
+  </g>
+</svg>

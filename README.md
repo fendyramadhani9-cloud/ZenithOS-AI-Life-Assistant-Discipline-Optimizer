@@ -4,15 +4,57 @@
 
 <br/>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-38BDF8?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](./LICENSE)
+[![Download Android APK](https://img.shields.io/badge/Download_APK-v1.0.0_Release-34D399?style=for-the-badge&logo=android&logoColor=white)](https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer/releases/latest)
+[![Web Live Demo](https://img.shields.io/badge/Web_App-Docker_Ready-38BDF8?style=for-the-badge&logo=nginx&logoColor=white)](#option-1-running-web-version-via-docker-desktop--homelab)
+[![License: MIT](https://img.shields.io/badge/License-MIT-818CF8?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](./LICENSE)
 [![Flutter](https://img.shields.io/badge/Flutter-3.27_LTS-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com)
-[![Offline First](https://img.shields.io/badge/Offline--First-Resilient-34D399?style=for-the-badge&logo=hive&logoColor=white)](#)
-[![Google Gemini](https://img.shields.io/badge/AI-Google_Gemini_&_GPT--4o-818CF8?style=for-the-badge&logo=google&logoColor=white)](https://aistudio.google.com)
-[![CI/CD](https://img.shields.io/badge/GitHub_Actions-Automated_CI%2FCD-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer/actions)
+[![CI/CD](https://img.shields.io/badge/GitHub_Actions-100%25_Passing-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer/actions)
+
+<br/>
 
 **ZenithOS** is an enterprise-grade, offline-first personal assistant, daily discipline optimizer, and resilient knowledge vault built with Flutter (Dart) and Node.js. It features a responsive Cyber-Obsidian UI tailored for both Desktop Web and Native Android Mobile.
 
+<br/>
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <a href="https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer/releases/latest">
+        <img src="https://img.shields.io/badge/📱_DOWNLOAD_ANDROID_APK-Direct_Install_(Zero_Backend)-10B981?style=for-the-badge&labelColor=064E3B" alt="Download APK" />
+      </a>
+      <br/><sub>Install langsung di HP Android Anda</sub>
+    </td>
+    <td align="center" width="50%">
+      <a href="#option-1-running-web-version-via-docker-desktop--homelab">
+        <img src="https://img.shields.io/badge/🌐_RUN_WEB_PORTAL-Docker_Compose_(Port_8080)-0284C7?style=for-the-badge&labelColor=0C4A6E" alt="Run Web" />
+      </a>
+      <br/><sub>Jalankan di Web Desktop / Homelab via Docker</sub>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+---
+
+## 💎 Official App Icon: Monogram Z + Prism Core
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" width="220">
+        <img src="./docs/assets/zenith_app_icon.svg" alt="ZenithOS App Icon" width="180" height="180" />
+      </td>
+      <td>
+        <h3><b>Konsep: "Monogram Z + Prism Core" (Official)</b></h3>
+        <ul>
+          <li><b>Bentuk Geometris</b>: Huruf <code>Z</code> monolitik yang dipotong simetris menyerupai kristal obsidian dan prisma heksagonal futuristik.</li>
+          <li><b>Palet Obsidian OLED</b>: Background hitam pekat <code>#0A0D14</code> dengan garis huruf <code>Z</code> bergradasi lembut dari <i>Electric Sky Blue</i> (<code>#38BDF8</code>) ke <i>Soft Indigo</i> (<code>#818CF8</code>).</li>
+          <li><b>Energy Core</b>: Inti presisi cyan di tengah sebagai simbol sistem operasi asisten kehidupan pribadi yang selalu aktif, tangguh, dan terpusat.</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
 </div>
 
 ---
@@ -160,7 +202,11 @@ flowchart TD
 │       ├── index.js                       # Webhook listener & cron scheduler
 │       └── wa_client.js                   # Baileys WhatsApp bot client
 ├── docs/
-│   └── assets/                            # Animated SVG diagrams & interactive visualizers
+│   └── assets/
+│       ├── zenith_app_icon.svg            # Official App Icon (Concept 1)
+│       ├── zenith_header_banner.svg       # Animated SVG Header
+│       ├── system_architecture_animation.svg
+│       └── cicd_pipeline_animation.svg
 ├── frontend/
 │   ├── Dockerfile                         # Multi-stage Flutter SDK -> Nginx Alpine
 │   └── nginx.conf                         # Reverse proxy and SPA routing
@@ -220,11 +266,9 @@ flowchart TD
 
 ### Option 2: Standalone Native Android APK Installation
 
-1. **Build Release APK**:
-   ```bash
-   flutter build apk --release
-   ```
-2. **Install APK**: Transfer file `build/app/outputs/flutter-apk/app-release.apk` ke HP Android Anda lalu lakukan instalasi.
+1. **Unduh File APK Rilis**:
+   - Klik link rilis langsung: **[Download ZenithOS Android APK (v1.0.0)](https://github.com/fendyramadhani9-cloud/ZenithOS-AI-Life-Assistant-Discipline-Optimizer/releases/latest)**
+2. **Install APK**: Buka file `.apk` yang telah diunduh di HP Android Anda lalu lakukan instalasi.
 3. **Buka Aplikasi ZenithOS**: Pada layar pertama (*Onboarding*), Anda akan diminta memasukkan API Key Anda sendiri (**Zero Backend Required** — HP Anda langsung berkomunikasi secara terenkripsi ke endpoint AI).
 
 #### 🔑 Cara Mendapatkan API Key Google Gemini (100% Gratis):
