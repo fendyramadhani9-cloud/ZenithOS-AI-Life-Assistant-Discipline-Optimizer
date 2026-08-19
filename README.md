@@ -1,6 +1,8 @@
 <div align="center">
 
-# ZenithOS — AI Life Assistant & Discipline Optimizer
+<img src="./docs/assets/zenith_header_banner.svg" alt="ZenithOS Header Banner" width="100%" />
+
+<br/>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-38BDF8?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](./LICENSE)
 [![Flutter](https://img.shields.io/badge/Flutter-3.27_LTS-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
@@ -29,7 +31,13 @@
 
 ---
 
-## 2. Core Pillars & Architecture
+## 2. Core Pillars & System Architecture
+
+<div align="center">
+  <img src="./docs/assets/system_architecture_animation.svg" alt="ZenithOS System Architecture" width="100%" />
+</div>
+
+<br/>
 
 ### A. Multi-Provider AI Engine with Auto-Failover (BYOK)
 - Supports **Google Gemini** (`gemini-1.5-flash`, `gemini-1.5-pro`) and **OpenAI GPT** (`gpt-4o-mini`, `gpt-4o`).
@@ -66,7 +74,11 @@
 
 ## 3. CI/CD Architecture & Pipeline Workflow
 
-ZenithOS mengimplementasikan pipeline CI/CD berstandar enterprise menggunakan **GitHub Actions** yang memisahkan verifikasi kualitas kode (*Continuous Integration*) dan pengiriman rilis terkontrol dengan *Approval Gate* (*Continuous Delivery*).
+<div align="center">
+  <img src="./docs/assets/cicd_pipeline_animation.svg" alt="ZenithOS CI/CD Pipeline Flow" width="100%" />
+</div>
+
+<br/>
 
 ```mermaid
 flowchart TD
@@ -147,6 +159,8 @@ flowchart TD
 │   └── src/
 │       ├── index.js                       # Webhook listener & cron scheduler
 │       └── wa_client.js                   # Baileys WhatsApp bot client
+├── docs/
+│   └── assets/                            # Animated SVG diagrams & interactive visualizers
 ├── frontend/
 │   ├── Dockerfile                         # Multi-stage Flutter SDK -> Nginx Alpine
 │   └── nginx.conf                         # Reverse proxy and SPA routing
